@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reversi.Server", "Server\Reversi.Server.csproj", "{68D607F6-4A08-4199-A493-5DEFB7145C4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reversi.Server", "Server\Reversi.Server.csproj", "{68D607F6-4A08-4199-A493-5DEFB7145C4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reversi.Client", "Client\Reversi.Client.csproj", "{F48059B5-1D36-4663-B68A-B5945EAD7BBC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reversi.Shared", "Shared\Reversi.Shared.csproj", "{68D6DA4A-DA10-422B-8994-048A9137AA2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reversi.Client", "Client\Reversi.Client.csproj", "{F48059B5-1D36-4663-B68A-B5945EAD7BBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{F48059B5-1D36-4663-B68A-B5945EAD7BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F48059B5-1D36-4663-B68A-B5945EAD7BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F48059B5-1D36-4663-B68A-B5945EAD7BBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68D6DA4A-DA10-422B-8994-048A9137AA2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68D6DA4A-DA10-422B-8994-048A9137AA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68D6DA4A-DA10-422B-8994-048A9137AA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68D6DA4A-DA10-422B-8994-048A9137AA2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

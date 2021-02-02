@@ -10,7 +10,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\Reversi.Client.csproj" />
-    <ProjectReference Include="..\Shared\Reversi.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 
