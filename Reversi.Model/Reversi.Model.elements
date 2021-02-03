@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProductVersion>3.5</ProductVersion>
+    <RootNamespace>Reversi.Model</RootNamespace>
+    <ProjectGuid>{E09A53E1-BD48-4515-9A67-B70B5147A7C5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Reversi.Model</AssemblyName>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <TargetFramework>.NETCore</TargetFramework>
+    <Mode>Echoes</Mode>
+    <Name>Reversi.Model</Name>
+    <SuppressWarnings>W27</SuppressWarnings>
+    <XmlDoc>True</XmlDoc>
+    <XmlDocWarningLevel>WarningOnPrivateMembers</XmlDocWarningLevel>
+    <WarnOnCaseMismatch>False</WarnOnCaseMismatch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <OutputPath>.\Bin\Debug</OutputPath>
+    <ConditionalDefines>DEBUG;TRACE;</ConditionalDefines>
+    <GeneratePDB>True</GeneratePDB>
+    <GenerateMDB>True</GenerateMDB>
+    <EnableAsserts>True</EnableAsserts>
+    <CpuType>anycpu</CpuType>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <EnableInlining>False</EnableInlining>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>.\Bin\Release</OutputPath>
+    <CpuType>anycpu</CpuType>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.pas" />
+    <Compile Include="Board\BoardSquareStatus.pas" />
+    <Compile Include="Board\Board.pas" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OrdinaSoft.Aspects">
+      <IsCirrusRef>True</IsCirrusRef>
+      <HintPath>D:\Chrome\ChromeLib\Bin\OrdinaSoft.Aspects.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.targets" />
+</Project>

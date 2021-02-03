@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProductVersion>3.5</ProductVersion>
+    <RootNamespace>Reversi</RootNamespace>
+    <ProjectGuid>{00FB2817-8A43-469D-A187-DFB3B81D4755}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>TestBoard</AssemblyName>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <TargetFramework>.NETCore</TargetFramework>
+    <Mode>Echoes</Mode>
+    <Name>TestBoard</Name>
+    <WarnOnCaseMismatch>False</WarnOnCaseMismatch>
+    <SuppressWarnings>W27</SuppressWarnings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <OutputPath>.\Bin\Debug</OutputPath>
+    <ConditionalDefines>DEBUG;TRACE;</ConditionalDefines>
+    <GeneratePDB>True</GeneratePDB>
+    <GenerateMDB>True</GenerateMDB>
+    <EnableAsserts>True</EnableAsserts>
+    <CpuType>anycpu</CpuType>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+    <EnableInlining>False</EnableInlining>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>.\Bin\Release</OutputPath>
+    <CpuType>anycpu</CpuType>
+    <EnableUnmanagedDebugging>False</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.pas" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Reversi.Model\Reversi.Model.elements">
+      <Name>Reversi.Model</Name>
+      <Project>{e09a53e1-bd48-4515-9a67-b70b5147a7c5}</Project>
+      <Private>True</Private>
+      <HintPath>..\Reversi.Model\Bin\Debug\Reversi.Model.dll</HintPath>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Echoes.targets" />
+</Project>

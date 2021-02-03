@@ -5,6 +5,8 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+using Reversi.Model;
+
 namespace Reversi.Client
 {
   public class Program

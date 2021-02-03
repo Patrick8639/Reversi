@@ -2,3 +2,7 @@ Client/obj/
 Server/obj/
 Shared/obj/
 .vs/
+Reversi.Model/Bin/
+Server/bin/
+TestBoard/Bin/
+Client/bin/
