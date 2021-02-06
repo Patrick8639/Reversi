@@ -195,13 +195,13 @@
       "mscorlib.dll": "sha256-pfURHvguun0aGHBikgqj1tcIC9yVwDja+omBjH9K0WU=",
       "netstandard.dll": "sha256-zDt6ZaAbtKh1rxzQ7CMtlli234CuRfzZU6Fe9cc2FG4=",
       "System.Private.CoreLib.dll": "sha256-KRDEW\/5qbC0\/9M5IbDGIAM1sKCutWHyq9oLl8WW0c3I=",
-      "Reversi.Model.dll": "sha256-V7Bbb5pHn6gm5B2hXFTF7pWhe87RtGY3i6iEjw+nTfQ=",
-      "Reversi.Client.dll": "sha256-TflIEgPfnUj3BCyf6HZIG+uYCfZRldpN61JTra0H3M0="
+      "Reversi.Model.dll": "sha256-FNtGl7RiBoYQK10pVT2A5XqzvNqDChoMQDZRAI2cTdY=",
+      "Reversi.Client.dll": "sha256-+n59qKuo871SL6gSfEokLnJkTKbte6KwDG7i30yPdfc="
     },
     "lazyAssembly": null,
     "pdb": {
-      "Reversi.Model.pdb": "sha256-USGnMuSxzedyzH7hv07GG7SrnVwBUgrbr5IdKpcKAYs=",
-      "Reversi.Client.pdb": "sha256-apwvnPtSsvkXdjmptJFo0uMGaguPVzrprjKPUptjls8="
+      "Reversi.Model.pdb": "sha256-s0I9hGzecvrwdth\/UAFf6cYapAFZPSBh\/vG0iNS6c8w=",
+      "Reversi.Client.pdb": "sha256-QMksCrxEOKA1olPWlTmsLPnxkqnrkA6yQW28wAINRbQ="
     },
     "runtime": {
       "dotnet.timezones.blat": "sha256-\/mwFhTTF4Kca8PG7G6rxaGqCueWH9XbWEIK1Fm8GbFg=",

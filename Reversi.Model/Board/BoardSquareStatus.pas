@@ -30,6 +30,10 @@ Interface
     ///     only use during a game.
     ///   </para>
     ///   <para>
+    ///     This enum defines the <i>MoveableZone</i> that is a mark in addition to a normal
+    ///     status (here, the <i>Empty</i>.
+    ///   </para>
+    ///   <para>
     ///     The <i>Border</i> value is used to simplify the algorithm to calculate the moves: the
     ///     algorithm can stop moving into a direction when one of these square is found.
     ///   </para>
@@ -64,17 +68,27 @@ Interface
       ///   The square is on the border.
       /// </summary>
       /// <remarks>
-      ///   The value is <b>16</b>.
+      ///   The value is <b>15</b>.
       /// </remarks>
-      Border = 16,
+      Border = 15,
 
       /// <summary>
       ///   The square is a moveable zone for the current player.
       /// </summary>
       /// <remarks>
-      ///   The value is <b>17</b>.
+      ///   The value is <b>16</b>.
       /// </remarks>
-      MoveableZone = 17
+      MoveableZone = 16,
+
+      /// <summary>
+      ///   The mask to have only the content of a square.
+      /// </summary>
+      ContentMask = $0F,
+
+      /// <summary>
+      ///   The mask to have only the marks of a square.
+      /// </summary>
+      MarkMask = $F0
     ) Of Byte;
 
 (*---------------------------------------------------------------------------------------------*)

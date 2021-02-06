@@ -28,6 +28,41 @@ Interface
     /// </summary>
     Board = Public Sealed Class
 
+    Private Const
+
+      /// <summary>
+      ///   The first playable index.
+      /// </summary>
+      FirstPlayableIx = 10;
+
+      /// <summary>
+      ///   The last playable index.
+      /// </summary>
+      LastPlayableIx = 80;
+
+    Private Class
+
+    {-- Field --}
+
+      /// <summary>
+      ///   The legal moves.
+      /// </summary>
+      /// <remarks>
+      ///   As the internal board is represented as a one-dimension array, the moves are
+      ///   expressed as a single number.
+      /// </remarks>
+      Moves := [
+          1,  // left
+         -1,  // right
+         -9,  // top
+          9,  // bottom
+        -10,  // top left
+         -8,  // top right
+         10,  // bottom right
+          8   // bottom left
+        ];
+        ReadOnly;
+
     Private
 
     {-- Field --}
@@ -78,12 +113,18 @@ Interface
 
     Public
 
-    {-- Constructor --}
+    {-- Constructors --}
 
       /// <summary>
       ///   Initializes a standard 8 x 8 board.
       /// </summary>
       Constructor;
+
+      /// <summary>
+      ///   Initializes a board from an existing one.
+      /// </summary>
+      /// <param name="Board">The new board.</param>
+      Constructor (Board : Board);
 
     {-- Properties --}
 
@@ -130,6 +171,38 @@ Interface
         Write _Board [CheckAndGetIndex (NoRow, NoColumn)];
         Default;
 
+    {-- Methods --}
+
+      /// <summary>
+      ///   Clears all the marks on the board.
+      /// </summary>
+      Method ClearMarks;
+
+      /// <summary>
+      ///   Gets the legal moves for a player.
+      /// </summary>
+      /// <param name="Player">The player that has to play.</param>
+      /// <returns>The moves.</returns>
+      /// <remarks>
+      ///   If there is no move for the player, the result is an empty list.
+      /// </remarks>
+      Method GetMoves (Player : BoardSquareStatus) : List <Int32>;
+
+      /// <summary>
+      ///   Merks the legal moves for a player.
+      /// </summary>
+      /// <param name="Player">The player that has to play.</param>
+      /// <returns>The moves.</returns>
+      /// <remarks>
+      ///   <para>
+      ///     This method removes the current marks and sets marks for the legal moves.
+      ///   </para>
+      ///   <para>
+      ///     If there is no move for the player, the result is an empty list.
+      ///   </para>
+      /// </remarks>
+      Method MarkMoves (Player : BoardSquareStatus) : List <Int32>;
+
     End;
 
 (*---------------------------------------------------------------------------------------------*)
@@ -137,7 +210,7 @@ Interface
 Implementation
 
 (*---------------------------------------------------------------------------------------------*)
-(* Constructor. *)
+(* Constructors. *)
 
   // <summary>
   //   Initializes a standard 8 x 8 board.
@@ -150,7 +223,7 @@ Implementation
     _NbRows    := 8;
 
     {-- Initializes the board --}
-    _Board := New BoardSquareStatus [(_NbColumns + 1) * (_NbRows + 2) - 1];
+    _Board := New BoardSquareStatus [(_NbColumns + 1) * (_NbRows + 2) + 1];
 
     With NbRows1 := _NbRows + 1 Do
       For NoColumn : Int32 := 1 To _NbColumns + 1 Do Begin
@@ -159,7 +232,29 @@ Implementation
       End;
 
     For NoRow : Int32 := 1 To 7 Do
-      _Board [GetIndex (NoRow, 9)] := BoardSquareStatus.Border
+      _Board [GetIndex (NoRow, 9)] := BoardSquareStatus.Border;
+
+    _Board [GetIndex (0, 0)] := BoardSquareStatus.Border;
+    _Board [GetIndex (9, 9)] := BoardSquareStatus.Border
+
+  End;
+
+
+
+  // <summary>
+  //   Initializes a board from an existing one.
+  // </summary>
+  // <param name="Board">The new board.</param>
+
+  Constructor Board (
+    Board : Board
+  );
+
+  Begin
+    _NbColumns := Board._NbColumns;
+    _NbRows    := Board._NbRows;
+
+    Board._Board.CopyTo (_Board, 0)
   End;
 
 (*---------------------------------------------------------------------------------------------*)
@@ -219,7 +314,101 @@ Implementation
   ) : Int32;
 
   Begin
-    Result := (_NbColumns + 1) * NoRow + NoColumn - 1
+    Result := (_NbColumns + 1) * NoRow + NoColumn
+  End;
+
+(*---------------------------------------------------------------------------------------------*)
+(* Moves. *)
+
+  // <summary>
+  //   Gets the legal moves for a player.
+  // </summary>
+  // <param name="Player">The player that has to play.</param>
+  // <returns>The moves.</returns>
+  // <remarks>
+  //   If there is no move for the player, the result is an empty list.
+  // </remarks>
+
+  Method Board.GetMoves (
+    Player : BoardSquareStatus
+  ) : List <Int32>;
+
+  Begin
+    Result := New List <Int32>;
+
+    Var Opponent :=
+          If Player = BoardSquareStatus.Black Then
+            BoardSquareStatus.White
+          Else BoardSquareStatus.Black;
+
+    For ix : Int32 := FirstPlayableIx To LastPlayableIx Do
+      If (_Board [ix] And BoardSquareStatus.ContentMask) = BoardSquareStatus.Empty Then Begin
+        Var Finished := False;
+
+        For Move In Moves Do Begin
+          Var Pos := ix + Move;
+
+          If (_Board [Pos] And BoardSquareStatus.ContentMask) = Opponent Then
+            Loop Begin
+              Pos := Pos + Move;
+
+              Var Content := (_Board [Pos] And BoardSquareStatus.ContentMask);
+
+              If Content <> Opponent Then Begin
+                If Content = Player Then
+                  Result.Add (ix);
+                Finished := True;
+                Break
+              End
+            End;
+
+          If Finished Then
+            Break
+        End
+      End
+  End;
+
+
+
+  // <summary>
+  //   Merks the legal moves for a player.
+  // </summary>
+  // <param name="Player">The player that has to play.</param>
+  // <returns>The moves.</returns>
+  // <remarks>
+  //   <para>
+  //     This method removes the current marks and sets marks for the legal moves.
+  //   </para>
+  //   <para>
+  //     If there is no move for the player, the result is an empty list.
+  //   </para>
+  // </remarks>
+
+  Method Board.MarkMoves (
+    Player : BoardSquareStatus
+  ) : List <Int32>;
+
+  Begin
+    ClearMarks;
+
+    Result := GetMoves (Player);
+
+    For ix In Result Do
+      _Board [ix] := BoardSquareStatus.MoveableZone
+  End;
+
+(*---------------------------------------------------------------------------------------------*)
+(* Tools. *)
+
+  // <summary>
+  //   Clears all the marks on the board.
+  // </summary>
+
+  Method Board.ClearMarks;
+
+  Begin
+    For ix : Int32 := FirstPlayableIx To LastPlayableIx Do
+      _Board [ix] := _Board [ix] And BoardSquareStatus.ContentMask;
   End;
 
 (*---------------------------------------------------------------------------------------------*)
