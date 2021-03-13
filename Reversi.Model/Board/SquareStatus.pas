@@ -38,7 +38,8 @@ Interface
     ///     algorithm can stop moving into a direction when one of these square is found.
     ///   </para>
     /// </remarks>
-    BoardSquareStatus = Public Enum (
+
+    SquareStatus = Public Enum (
 
       /// <summary>
       ///   The square is empty.
@@ -65,12 +66,12 @@ Interface
       White = 2,
 
       /// <summary>
-      ///   The square is on the border.
+      ///   The square is on the outside of the square.
       /// </summary>
       /// <remarks>
       ///   The value is <b>15</b>.
       /// </remarks>
-      Border = 15,
+      Outside = 15,
 
       /// <summary>
       ///   The square is a moveable zone for the current player.
@@ -89,6 +90,7 @@ Interface
       ///   The mask to have only the marks of a square.
       /// </summary>
       MarkMask = $F0
+
     ) Of Byte;
 
 (*---------------------------------------------------------------------------------------------*)

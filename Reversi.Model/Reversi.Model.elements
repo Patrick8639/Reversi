@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.pas" />
-    <Compile Include="Board\BoardSquareStatus.pas" />
+    <Compile Include="Board\SquareStatus.pas" />
     <Compile Include="Board\Board.pas" />
   </ItemGroup>
   <ItemGroup>

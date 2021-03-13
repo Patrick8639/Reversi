@@ -26,6 +26,7 @@ Interface
     /// <summary>
     ///   A board.
     /// </summary>
+
     Board = Public Sealed Class
 
     Private Const
@@ -73,7 +74,7 @@ Interface
       /// <remarks>
       ///   The index is calculated as 
       /// </remarks>
-      _Board : Array Of BoardSquareStatus;
+      _Board : Array Of SquareStatus;
         ReadOnly;
 
     {-- Methods --}
@@ -90,10 +91,9 @@ Interface
       ///   <paramref name="NoColumn" /> is less than 1 or greater than <see cref="NbColumns" />.
       /// </exception>
       /// <remarks>
-      ///   The outside rows are reserved for <see cref="BoardSquareStatus">Border</see>
-      ///   squares, so the playable indexes are 1 to <see cref="NbRows" /> for
-      ///   <paramref name="NoRow" /> and 1 to <see cref="NbColumns" /> for
-      ///   <paramref name="NoColumn" />.
+      ///   The outside rows are reserved for <see cref="SquareStatus">Outside</see> squares, so
+      ///   the playable indexes are 1 to <see cref="NbRows" /> for <paramref name="NoRow" /> and
+      ///   1 to <see cref="NbColumns" /> for <paramref name="NoColumn" />.
       /// </remarks>
       Method CheckAndGetIndex (NoRow, NoColumn : Int32) : Int32;
 
@@ -104,10 +104,9 @@ Interface
       /// <param name="NoColumn">The column number.</param>
       /// <returns>The index.</returns>
       /// <remarks>
-      ///   The outside rows are reserved for <see cref="BoardSquareStatus">Border</see>
-      ///   squares, so the playable indexes are 1 to <see cref="NbRows" /> for
-      ///   <paramref name="NoRow" /> and 1 to <see cref="NbColumns" /> for
-      ///   <paramref name="NoColumn" />.
+      ///   The outside rows are reserved for <see cref="SquareStatus">Outside</see> squares, so
+      ///   the playable indexes are 1 to <see cref="NbRows" /> for <paramref name="NoRow" /> and
+      ///   1 to <see cref="NbColumns" /> for <paramref name="NoColumn" />.
       /// </remarks>
       Method GetIndex (NoRow, NoColumn : Int32) : Int32;
 
@@ -160,13 +159,12 @@ Interface
       ///     This is the default indexed property.
       ///   </para>
       ///   <para>
-      ///     The outside rows are reserved for <see cref="BoardSquareStatus">Border</see>
-      ///     squares, so the playable indexes are 1 to <see cref="NbRows" /> for
-      ///     <paramref name="NoRow" /> and 1 to <see cref="NbColumns" /> for
-      ///     <paramref name="NoColumn" />.
+      ///     The outside rows are reserved for <see cref="SquareStatus">Outer</see> squares, so
+      ///     the playable indexes are 1 to <see cref="NbRows" /> for <paramref name="NoRow" />
+      ///     and 1 to <see cref="NbColumns" /> for <paramref name="NoColumn" />.
       ///   </para>
       /// </remarks>
-      Property Square [NoRow, NoColumn : Int32] : BoardSquareStatus
+      Property Square [NoRow, NoColumn : Int32] : SquareStatus
         Read  _Board [CheckAndGetIndex (NoRow, NoColumn)]
         Write _Board [CheckAndGetIndex (NoRow, NoColumn)];
         Default;
@@ -186,7 +184,7 @@ Interface
       /// <remarks>
       ///   If there is no move for the player, the result is an empty list.
       /// </remarks>
-      Method GetMoves (Player : BoardSquareStatus) : List <Int32>;
+      Method GetMoves (Player : SquareStatus) : List <Int32>;
 
       /// <summary>
       ///   Merks the legal moves for a player.
@@ -201,7 +199,7 @@ Interface
       ///     If there is no move for the player, the result is an empty list.
       ///   </para>
       /// </remarks>
-      Method MarkMoves (Player : BoardSquareStatus) : List <Int32>;
+      Method MarkMoves (Player : SquareStatus) : List <Int32>;
 
     End;
 
@@ -223,19 +221,19 @@ Implementation
     _NbRows    := 8;
 
     {-- Initializes the board --}
-    _Board := New BoardSquareStatus [(_NbColumns + 1) * (_NbRows + 2) + 1];
+    _Board := New SquareStatus [(_NbColumns + 1) * (_NbRows + 2) + 1];
 
     With NbRows1 := _NbRows + 1 Do
       For NoColumn : Int32 := 1 To _NbColumns + 1 Do Begin
-        _Board [GetIndex (0,       NoColumn    )] := BoardSquareStatus.Border;
-        _Board [GetIndex (NbRows1, NoColumn - 1)] := BoardSquareStatus.Border
+        _Board [GetIndex (0,       NoColumn    )] := SquareStatus.Outside;
+        _Board [GetIndex (NbRows1, NoColumn - 1)] := SquareStatus.Outside
       End;
 
     For NoRow : Int32 := 1 To 7 Do
-      _Board [GetIndex (NoRow, 9)] := BoardSquareStatus.Border;
+      _Board [GetIndex (NoRow, 9)] := SquareStatus.Outside;
 
-    _Board [GetIndex (0, 0)] := BoardSquareStatus.Border;
-    _Board [GetIndex (9, 9)] := BoardSquareStatus.Border
+    _Board [GetIndex (0, 0)] := SquareStatus.Outside;
+    _Board [GetIndex (9, 9)] := SquareStatus.Outside
 
   End;
 
@@ -272,10 +270,9 @@ Implementation
   //   <paramref name="NoColumn" /> is less than 1 or greater than <see cref="NbColumns" />.
   // </exception>
   // <remarks>
-  //   The outside rows are reserved for <see cref="BoardSquareStatus">Border</see>
-  //   squares, so the playable indexes are 1 to <see cref="NbRows" /> for
-  //   <paramref name="NoRow" /> and 1 to <see cref="NbColumns" /> for
-  //   <paramref name="NoColumn" />.
+  //   The outside rows are reserved for <see cref="SquareStatus">Outside</see> squares, so
+  //   the playable indexes are 1 to <see cref="NbRows" /> for <paramref name="NoRow" /> and
+  //   1 to <see cref="NbColumns" /> for <paramref name="NoColumn" />.
   // </remarks>
 
   Method Board.CheckAndGetIndex (
@@ -302,10 +299,9 @@ Implementation
   // <param name="NoColumn">The column number.</param>
   // <returns>The index.</returns>
   // <remarks>
-  //   The outside rows are reserved for <see cref="BoardSquareStatus">Border<y/see>
-  //   squares, so the playable indexes are 1 to <see cref="NbRows" /> for
-  //   <paramref name="NoRow" /> and 1 to <see cref="NbColumns" /> for
-  //   <paramref name="NoColumn" />.
+  //   The outside rows are reserved for <see cref="SquareStatus">Outside</see> squares, so
+  //   the playable indexes are 1 to <see cref="NbRows" /> for <paramref name="NoRow" /> and
+  //   1 to <see cref="NbColumns" /> for <paramref name="NoColumn" />.
   // </remarks>
 
   Method Board.GetIndex (
@@ -330,29 +326,29 @@ Implementation
   // </remarks>
 
   Method Board.GetMoves (
-    Player : BoardSquareStatus
+    Player : SquareStatus
   ) : List <Int32>;
 
   Begin
     Result := New List <Int32>;
 
     Var Opponent :=
-          If Player = BoardSquareStatus.Black Then
-            BoardSquareStatus.White
-          Else BoardSquareStatus.Black;
+          If Player = SquareStatus.Black Then
+            SquareStatus.White
+          Else SquareStatus.Black;
 
     For ix : Int32 := FirstPlayableIx To LastPlayableIx Do
-      If (_Board [ix] And BoardSquareStatus.ContentMask) = BoardSquareStatus.Empty Then Begin
+      If (_Board [ix] And SquareStatus.ContentMask) = SquareStatus.Empty Then Begin
         Var Finished := False;
 
         For Move In Moves Do Begin
           Var Pos := ix + Move;
 
-          If (_Board [Pos] And BoardSquareStatus.ContentMask) = Opponent Then
+          If (_Board [Pos] And SquareStatus.ContentMask) = Opponent Then
             Loop Begin
               Pos := Pos + Move;
 
-              Var Content := (_Board [Pos] And BoardSquareStatus.ContentMask);
+              Var Content := (_Board [Pos] And SquareStatus.ContentMask);
 
               If Content <> Opponent Then Begin
                 If Content = Player Then
@@ -385,7 +381,7 @@ Implementation
   // </remarks>
 
   Method Board.MarkMoves (
-    Player : BoardSquareStatus
+    Player : SquareStatus
   ) : List <Int32>;
 
   Begin
@@ -394,7 +390,7 @@ Implementation
     Result := GetMoves (Player);
 
     For ix In Result Do
-      _Board [ix] := BoardSquareStatus.MoveableZone
+      _Board [ix] := SquareStatus.MoveableZone
   End;
 
 (*---------------------------------------------------------------------------------------------*)
@@ -408,7 +404,7 @@ Implementation
 
   Begin
     For ix : Int32 := FirstPlayableIx To LastPlayableIx Do
-      _Board [ix] := _Board [ix] And BoardSquareStatus.ContentMask;
+      _Board [ix] := _Board [ix] And SquareStatus.ContentMask;
   End;
 
 (*---------------------------------------------------------------------------------------------*)

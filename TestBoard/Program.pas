@@ -25,6 +25,7 @@ Interface
     /// <summary>
     ///   Console application to test the Reversi board.
     /// </summary>
+
     &Program = Class
 
     Private
@@ -63,14 +64,14 @@ Implementation
   Begin
     Var Board := New Board;
 
-    Board [4, 4] := BoardSquareStatus.Black;
-    Board [5, 5] := BoardSquareStatus.Black;
-    Board [4, 5] := BoardSquareStatus.White;
-    Board [5, 4] := BoardSquareStatus.White;
+    Board [4, 4] := SquareStatus.Black;
+    Board [5, 5] := SquareStatus.Black;
+    Board [4, 5] := SquareStatus.White;
+    Board [5, 4] := SquareStatus.White;
 
     ShowBoard (Board, 'Initial');
 
-    Board.MarkMoves (BoardSquareStatus.Black);
+    Board.MarkMoves (SquareStatus.Black);
 
     ShowBoard (Board, 'Moves marked');
 
@@ -98,11 +99,11 @@ Implementation
       For NoColumn : Int32 := 1 To Board.NbColumns Do Begin
         Console.Write (
           Case Board [NoRow, NoColumn] Of
-            BoardSquareStatus.Border       : 'Z';
-            BoardSquareStatus.Black        : 'X';
-            BoardSquareStatus.White        : 'O';
-            BoardSquareStatus.Empty        : '.';
-            BoardSquareStatus.MoveableZone : '?';
+            SquareStatus.Outside       : 'Z';
+            SquareStatus.Black        : 'X';
+            SquareStatus.White        : 'O';
+            SquareStatus.Empty        : '.';
+            SquareStatus.MoveableZone : '?';
           End);
         If NoColumn <> 8 Then
           Console.Write (' ')
