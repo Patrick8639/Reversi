@@ -30,7 +30,23 @@ Interface
 
     Private
 
-    {-- Method --}
+    {-- Methods --}
+
+      /// <summary>
+      ///   Makes a benchmark of the move generator.
+      /// </summary>
+      /// <param name="NbLevels">The number of levels.</param>
+      Class Method BenchmarkGenerator (NbLevels : Int32);
+
+      /// <summary>
+      ///   Generate all the boards at a specified level.
+      /// </summary>
+      /// <param name="Board">The board.</param>
+      /// <param name="Player">The player who must play.</param>
+      /// <param name="NbLevels">The number of levels.</param>
+      /// <returns>The number of boards.</returns>
+      Class Method GenerateBoards (Board : Board; Player : SquareStatus; NbLevels : Int32)
+        : Int32;
 
       /// <summary>
       ///   Shows a board on the the console.
@@ -66,11 +82,7 @@ Implementation
 
     ShowBoard (Board, 'Initial');
 
-    Console.WriteLine (Board.Play (SquareStatus.Dark, 5, 6));
-
-    Board.MarkMoves (SquareStatus.Light);
-
-    ShowBoard (Board, 'Moves marked');
+    BenchmarkGenerator (7);
 
     Console.ReadLine
   End;
@@ -106,6 +118,74 @@ Implementation
           Console.Write (' ')
       End;
       Console.WriteLine
+    End
+  End;
+
+(*---------------------------------------------------------------------------------------------*)
+(* Move generator benchmark. *)
+
+  // <summary>
+  //   Makes a benchmark of the move generator.
+  // </summary>
+  // <param name="NbLevels">The number of levels.</param>
+
+  Class Method &Program.BenchmarkGenerator (
+    NbLevels : Int32
+  );
+
+  Begin
+    For Level : Int32 := 1 To NbLevels Do Begin
+      Var sw := New Stopwatch;
+      sw.Start;
+      Var Board   := New Board;
+      Var NbMoves := GenerateBoards (Board, SquareStatus.Dark, Level);
+      sw.Stop;
+
+      Var NbMilliseconds := Double (1000 * sw.ElapsedTicks) / sw.Frequency;
+
+      Console.WriteLine (
+        'Level ' + Level.ToString + ': '
+        + NbMoves.ToString + ' positions in ' + NbMilliseconds.ToString ('0.000') + 'ms ('
+        + (NbMilliseconds / NbMoves).ToString ('0.000000') + 'ms per position)'
+      )
+    End
+  End;
+
+
+
+  // <summary>
+  //   Generate all the boards at a specified level.
+  // </summary>
+  // <param name="Board">The board.</param>
+  // <param name="Player">The player who must play.</param>
+  // <param name="NbLevels">The number of levels.</param>
+  // <returns>The number of boards.</returns>
+
+  Class Method &Program.GenerateBoards (
+    Board    : Board;
+    Player   : SquareStatus;
+    NbLevels : Int32
+  ) : Int32;
+
+  Begin
+    Var Moves := Board.GetMoves (Player);
+
+    If NbLevels = 1 Then
+      Exit Moves.Count;
+
+    Dec (NbLevels);
+
+    Result := 0;
+
+    Var Opponent := 
+          If Player = SquareStatus.Dark Then
+            SquareStatus.Light
+          Else SquareStatus.Dark;
+
+    For Move In Moves Do Begin
+      Var NewBoard := New Board (Board);
+      NewBoard.Play (Player, Move);
+      Inc (Result, GenerateBoards (NewBoard, Opponent, NbLevels))
     End
   End;
 
