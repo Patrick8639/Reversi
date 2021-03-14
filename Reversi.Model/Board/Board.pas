@@ -285,45 +285,45 @@ Implementation
     Case StartPosition Of
 
       StartPosition.LightBottom : Begin
-        _Board [GetIndex (4, 4)] := SquareStatus.Black;
-        _Board [GetIndex (4, 5)] := SquareStatus.Black;
-        _Board [GetIndex (5, 4)] := SquareStatus.White;
-        _Board [GetIndex (5, 5)] := SquareStatus.White
+        _Board [GetIndex (4, 4)] := SquareStatus.Dark;
+        _Board [GetIndex (4, 5)] := SquareStatus.Dark;
+        _Board [GetIndex (5, 4)] := SquareStatus.Light;
+        _Board [GetIndex (5, 5)] := SquareStatus.Light
       End;
 
       StartPosition.LightLeft : Begin
-        _Board [GetIndex (4, 4)] := SquareStatus.White;
-        _Board [GetIndex (4, 5)] := SquareStatus.Black;
-        _Board [GetIndex (5, 4)] := SquareStatus.White;
-        _Board [GetIndex (5, 5)] := SquareStatus.Black
+        _Board [GetIndex (4, 4)] := SquareStatus.Light;
+        _Board [GetIndex (4, 5)] := SquareStatus.Dark;
+        _Board [GetIndex (5, 4)] := SquareStatus.Light;
+        _Board [GetIndex (5, 5)] := SquareStatus.Dark
       End;
 
       StartPosition.LightRight : Begin
-        _Board [GetIndex (4, 4)] := SquareStatus.Black;
-        _Board [GetIndex (4, 5)] := SquareStatus.White;
-        _Board [GetIndex (5, 4)] := SquareStatus.Black;
-        _Board [GetIndex (5, 5)] := SquareStatus.White
+        _Board [GetIndex (4, 4)] := SquareStatus.Dark;
+        _Board [GetIndex (4, 5)] := SquareStatus.Light;
+        _Board [GetIndex (5, 4)] := SquareStatus.Dark;
+        _Board [GetIndex (5, 5)] := SquareStatus.Light
       End;
 
       StartPosition.LightTop : Begin
-        _Board [GetIndex (4, 4)] := SquareStatus.White;
-        _Board [GetIndex (4, 5)] := SquareStatus.White;
-        _Board [GetIndex (5, 4)] := SquareStatus.Black;
-        _Board [GetIndex (5, 5)] := SquareStatus.Black
+        _Board [GetIndex (4, 4)] := SquareStatus.Light;
+        _Board [GetIndex (4, 5)] := SquareStatus.Light;
+        _Board [GetIndex (5, 4)] := SquareStatus.Dark;
+        _Board [GetIndex (5, 5)] := SquareStatus.Dark
       End;
 
       StartPosition.Standard : Begin
-        _Board [GetIndex (4, 4)] := SquareStatus.White;
-        _Board [GetIndex (4, 5)] := SquareStatus.Black;
-        _Board [GetIndex (5, 4)] := SquareStatus.Black;
-        _Board [GetIndex (5, 5)] := SquareStatus.White
+        _Board [GetIndex (4, 4)] := SquareStatus.Light;
+        _Board [GetIndex (4, 5)] := SquareStatus.Dark;
+        _Board [GetIndex (5, 4)] := SquareStatus.Dark;
+        _Board [GetIndex (5, 5)] := SquareStatus.Light
       End;
 
       StartPosition.Standard : Begin
-        _Board [GetIndex (4, 4)] := SquareStatus.Black;
-        _Board [GetIndex (4, 5)] := SquareStatus.White;
-        _Board [GetIndex (5, 4)] := SquareStatus.White;
-        _Board [GetIndex (5, 5)] := SquareStatus.Black
+        _Board [GetIndex (4, 4)] := SquareStatus.Dark;
+        _Board [GetIndex (4, 5)] := SquareStatus.Light;
+        _Board [GetIndex (5, 4)] := SquareStatus.Light;
+        _Board [GetIndex (5, 5)] := SquareStatus.Dark
       End;
 
     End
@@ -430,12 +430,12 @@ Implementation
   ) : List <Int32>;
 
   Begin
-    Result := New List <Int32>;
+    Result := New List <Int32> (32);
 
     Var Opponent :=
-          If Player = SquareStatus.Black Then
-            SquareStatus.White
-          Else SquareStatus.Black;
+          If Player = SquareStatus.Dark Then
+            SquareStatus.Light
+          Else SquareStatus.Dark;
 
     For ix : Int32 := FirstPlayableIx To LastPlayableIx Do
       If (_Board [ix] And SquareStatus.ContentMask) = SquareStatus.Empty Then Begin

@@ -25,8 +25,8 @@ Interface
     /// </summary>
     /// <remarks>
     ///   <para>
-    ///     The <i>Empty</i>, <i>Black</i> and <i>White</i> values are used to save a board, so
-    ///     they have the smallest values. The <i>Border</i> and <i>MoveableZone</i> values are
+    ///     The <i>Empty</i>, <i>Dark</i> and <i>Light</i> values are used to save a board, so
+    ///     they have the smallest values. The <i>Outside</i> and <i>MoveableZone</i> values are
     ///     only use during a game.
     ///   </para>
     ///   <para>
@@ -34,8 +34,8 @@ Interface
     ///     status (here, the <i>Empty</i>.
     ///   </para>
     ///   <para>
-    ///     The <i>Border</i> value is used to simplify the algorithm to calculate the moves: the
-    ///     algorithm can stop moving into a direction when one of these square is found.
+    ///     The <i>Outside</i> value is used to simplify the algorithm to calculate the moves:
+    ///     the algorithm can stop moving into a direction when one of these square is found.
     ///   </para>
     /// </remarks>
 
@@ -50,20 +50,20 @@ Interface
       &Empty = 0,
 
       /// <summary>
-      ///   The square contains a black stone.
+      ///   The square contains a dark stone.
       /// </summary>
       /// <remarks>
       ///   The value is <b>1</b>.
       /// </remarks>
-      Black = 1,
+      Dark = 1,
 
       /// <summary>
-      ///   The square contains a white stone.
+      ///   The square contains a light stone.
       /// </summary>
       /// <remarks>
       ///   The value is <b>2</b>.
       /// </remarks>
-      White = 2,
+      Light = 2,
 
       /// <summary>
       ///   The square is on the outside of the square.
