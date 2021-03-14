@@ -66,7 +66,9 @@ Implementation
 
     ShowBoard (Board, 'Initial');
 
-    Board.MarkMoves (SquareStatus.Dark);
+    Console.WriteLine (Board.Play (SquareStatus.Dark, 5, 6));
+
+    Board.MarkMoves (SquareStatus.Light);
 
     ShowBoard (Board, 'Moves marked');
 

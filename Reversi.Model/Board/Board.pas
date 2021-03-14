@@ -240,6 +240,26 @@ Interface
       /// </remarks>
       Method MarkMoves (Player : SquareStatus) : List <Int32>;
 
+      /// <summary>
+      ///   Plays a disc to a position.
+      /// </summary>
+      /// <param name="Player">The player.</param>
+      /// <param name="Row">The row where the disc is played.</param>
+      /// <param name="Column">The column where the disc is played.</param>
+      /// <returns>The number of discs returned by the player. See the remarks</returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="Player" /> is neither <see cref="SquareStatus.Dark">Dark</see>, nor
+      ///   <see cref="SquareStatus.Light">Light</see>.<br />
+      ///   -or-<br />
+      ///   <paramref name="Row" /> is less than 1 or greater then <see cref="NbRows" />.<br />
+      ///   -or-<br />
+      ///   <paramref name="Column" /> is less than 1 or greater then <see cref="NbColumns" />.
+      /// </exception>
+      /// <exception cref="InvalidOperationException">
+      ///   The specified position is not a valid move for <paramref name="Player" />.
+      /// </exception>
+      Method Play (Player : SquareStatus; Row, Column : Int32) : Int32;
+
     End;
 
 (*---------------------------------------------------------------------------------------------*)
@@ -538,6 +558,90 @@ Implementation
 
     For ix In Result Do
       _Board [ix] := SquareStatus.MoveableZone
+  End;
+
+(*---------------------------------------------------------------------------------------------*)
+(* Playing. *)
+
+  // <summary>
+  //   Plays a disc to a position.
+  // </summary>
+  // <param name="Player">The player.</param>
+  // <param name="Row">The row where the disc is played.</param>
+  // <param name="Column">The column where the disc is played.</param>
+  // <returns>The number of discs returned by the player. See the remarks</returns>
+  // <exception cref="ArgumentException">
+  //   <paramref name="Player" /> is neither <see cref="SquareStatus.Dark">Dark</see>, nor
+  //   <see cref="SquareStatus.Light">Light</see>.<br />
+  //   -or-<br />
+  //   <paramref name="Row" /> is less than 1 or greater then <see cref="NbRows" />.<br />
+  //   -or-<br />
+  //   <paramref name="Column" /> is less than 1 or greater then <see cref="NbColumns" />.
+  // </exception>
+  // <exception cref="InvalidOperationException">
+  //   The specified position is not a valid move for <paramref name="Player" />.
+  // </exception>
+
+  Method Board.Play (
+    Player : SquareStatus;
+    Row,
+    Column : Int32
+  ) : Int32;
+
+  Begin
+    Case Player Of
+      SquareStatus.Dark,
+      SquareStatus.Light : ;  // normal case
+    Else
+      Raise New ArgumentException ('Must be Dark or Light.', NameOf (Player));
+    End;
+
+    If Not (1 <= Row <= NbRows) Then
+      Raise New ArgumentException ($'Must be between 1 and {NbRows}.', NameOf (Row));
+
+    If Not (1 <= Column <= NbColumns) Then
+      Raise New ArgumentException ($'Must be between 1 and {NbColumns}.', NameOf (Column));
+
+    ClearMarks;
+
+    Result := 0;
+
+    Var StartPos := GetIndex (Row, Column);
+
+    Var Opponent :=
+          If Player = SquareStatus.Dark Then
+            SquareStatus.Light
+          Else SquareStatus.Dark;
+
+    For Move In Moves Do Begin
+      Var Pos := StartPos + Move;
+
+      If _Board [Pos] = Opponent Then
+        Loop Begin
+          Pos := Pos + Move;
+
+          Case _Board [Pos] Of
+            Opponent : ;  // continue
+
+            Player : Begin  // discs to return
+              Loop Begin
+                Pos := Pos - Move;
+                If _Board [Pos] <> Opponent Then
+                  Break;
+                _Board [Pos] := Player;
+                Inc (Result)
+              End;
+              Break
+            End;
+
+          Else
+            Break
+          End;
+        End
+
+    End;
+
+    _Board [StartPos] := Player
   End;
 
 (*---------------------------------------------------------------------------------------------*)
