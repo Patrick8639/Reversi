@@ -319,7 +319,7 @@ Implementation
         _Board [GetIndex (5, 5)] := SquareStatus.Light
       End;
 
-      StartPosition.Standard : Begin
+      StartPosition.StandardInverted : Begin
         _Board [GetIndex (4, 4)] := SquareStatus.Dark;
         _Board [GetIndex (4, 5)] := SquareStatus.Light;
         _Board [GetIndex (5, 4)] := SquareStatus.Light;
