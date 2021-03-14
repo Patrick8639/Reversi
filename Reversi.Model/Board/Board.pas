@@ -516,9 +516,10 @@ Implementation
                 Var Content := (_Board [Pos] And SquareStatus.ContentMask);
 
                 If Content <> Opponent Then Begin
-                  If Content = Player Then
+                  If Content = Player Then Begin
                     Result.Add (ix);
-                  Finished := True;
+                    Finished := True
+                  End;
                   Break
                 End
               End;
