@@ -64,14 +64,9 @@ Implementation
   Begin
     Var Board := New Board;
 
-    Board [4, 4] := SquareStatus.Black;
-    Board [5, 5] := SquareStatus.Black;
-    Board [4, 5] := SquareStatus.White;
-    Board [5, 4] := SquareStatus.White;
-
     ShowBoard (Board, 'Initial');
 
-    Board.MarkMoves (SquareStatus.Black);
+    Board.MarkMoves (SquareStatus.Dark);
 
     ShowBoard (Board, 'Moves marked');
 
@@ -99,9 +94,9 @@ Implementation
       For NoColumn : Int32 := 1 To Board.NbColumns Do Begin
         Console.Write (
           Case Board [NoRow, NoColumn] Of
-            SquareStatus.Outside       : 'Z';
-            SquareStatus.Black        : 'X';
-            SquareStatus.White        : 'O';
+            SquareStatus.Outside      : 'Z';
+            SquareStatus.Dark         : 'X';
+            SquareStatus.Light        : 'O';
             SquareStatus.Empty        : '.';
             SquareStatus.MoveableZone : '?';
           End);
