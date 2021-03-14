@@ -260,6 +260,22 @@ Interface
       /// </exception>
       Method Play (Player : SquareStatus; Row, Column : Int32) : Int32;
 
+      /// <summary>
+      ///   Plays a disc to a position.
+      /// </summary>
+      /// <param name="Player">The player.</param>
+      /// <param name="Position">The position where the disc is played.</param>
+      /// <returns>The number of discs returned by the player. See the remarks</returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="Player" /> is neither <see cref="SquareStatus.Dark">Dark</see>, nor
+      ///   <see cref="SquareStatus.Light">Light</see>.<br />
+      ///   <paramref name="Position" /> is not a position on the board.
+      /// </exception>
+      /// <exception cref="InvalidOperationException">
+      ///   The specified position is not a valid move for <paramref name="Player" />.
+      /// </exception>
+      Method Play (Player : SquareStatus; Position : Int32) : Int32;
+
     End;
 
 (*---------------------------------------------------------------------------------------------*)
@@ -391,9 +407,12 @@ Implementation
       Raise New ArgumentNullException (NameOf (Board));
 
     _NbColumns     := Board._NbColumns;
+    _NbDarkDiscs   := Board._NbDarkDiscs;
+    _NbLightDiscs  := Board._NbLightDiscs;
     _NbRows        := Board._NbRows;
     _StartPosition := Board._StartPosition;
 
+    _Board := New SquareStatus [(_NbColumns + 1) * (_NbRows + 2) + 1];
     Board._Board.CopyTo (_Board, 0)
   End;
 
@@ -590,6 +609,38 @@ Implementation
   ) : Int32;
 
   Begin
+    If Not (1 <= Row <= NbRows) Then
+      Raise New ArgumentException ($'Must be between 1 and {NbRows}.', NameOf (Row));
+
+    If Not (1 <= Column <= NbColumns) Then
+      Raise New ArgumentException ($'Must be between 1 and {NbColumns}.', NameOf (Column));
+
+    Result := Play (Player, GetIndex (Row, Column))
+  End;
+
+
+
+  // <summary>
+  //   Plays a disc to a position.
+  // </summary>
+  // <param name="Player">The player.</param>
+  // <param name="Position">The position where the disc is played.</param>
+  // <returns>The number of discs returned by the player. See the remarks</returns>
+  // <exception cref="ArgumentException">
+  //   <paramref name="Player" /> is neither <see cref="SquareStatus.Dark">Dark</see>, nor
+  //   <see cref="SquareStatus.Light">Light</see>.<br />
+  //   <paramref name="Position" /> is not a position on the board.
+  // </exception>
+  // <exception cref="InvalidOperationException">
+  //   The specified position is not a valid move for <paramref name="Player" />.
+  // </exception>
+
+  Method Board.Play (
+    Player   : SquareStatus;
+    Position : Int32
+  ) : Int32;
+
+  Begin
     Case Player Of
       SquareStatus.Dark,
       SquareStatus.Light : ;  // normal case
@@ -597,17 +648,12 @@ Implementation
       Raise New ArgumentException ('Must be Dark or Light.', NameOf (Player));
     End;
 
-    If Not (1 <= Row <= NbRows) Then
-      Raise New ArgumentException ($'Must be between 1 and {NbRows}.', NameOf (Row));
-
-    If Not (1 <= Column <= NbColumns) Then
-      Raise New ArgumentException ($'Must be between 1 and {NbColumns}.', NameOf (Column));
+    If Not (0 <= Position < _Board.Length) Then
+      Raise New ArgumentException ($'Must be between 0 and {_Board.Length}.', NameOf (Position));
 
     ClearMarks;
 
     Result := 0;
-
-    Var StartPos := GetIndex (Row, Column);
 
     Var Opponent :=
           If Player = SquareStatus.Dark Then
@@ -615,7 +661,7 @@ Implementation
           Else SquareStatus.Dark;
 
     For Move In Moves Do Begin
-      Var Pos := StartPos + Move;
+      Var Pos := Position + Move;
 
       If _Board [Pos] = Opponent Then
         Loop Begin
@@ -642,7 +688,16 @@ Implementation
 
     End;
 
-    _Board [StartPos] := Player
+    _Board [Position] := Player;
+
+    If Player = SquareStatus.Dark Then Begin
+      Inc (_NbDarkDiscs,  Result + 1);
+      Dec (_NbLightDiscs, Result    )
+    End
+    Else Begin
+      Inc (_NbLightDiscs, Result + 1);
+      Dec (_NbDarkDiscs,  Result    )
+    End
   End;
 
 (*---------------------------------------------------------------------------------------------*)
