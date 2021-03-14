@@ -82,7 +82,7 @@ Implementation
 
     ShowBoard (Board, 'Initial');
 
-    BenchmarkGenerator (7);
+    BenchmarkGenerator (10);
 
     Console.ReadLine
   End;
@@ -178,10 +178,7 @@ Implementation
 
     Result := 0;
 
-    Var Opponent := 
-          If Player = SquareStatus.Dark Then
-            SquareStatus.Light
-          Else SquareStatus.Dark;
+    Var Opponent := Board.GetOpponent (Player);
 
     For Move In Moves Do Begin
       Var NewBoard := New Board (Board);
