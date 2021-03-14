@@ -141,12 +141,13 @@ Implementation
       Var NbMoves := GenerateBoards (Board, SquareStatus.Dark, Level);
       sw.Stop;
 
-      Var NbMilliseconds := Double (1000 * sw.ElapsedTicks) / sw.Frequency;
+      Var NbMicroseconds := Double (1000000 * sw.ElapsedTicks) / sw.Frequency;
 
       Console.WriteLine (
         'Level ' + Level.ToString + ': '
-        + NbMoves.ToString + ' positions in ' + NbMilliseconds.ToString ('0.000') + 'ms ('
-        + (NbMilliseconds / NbMoves).ToString ('0.000000') + 'ms per position)'
+        + NbMoves.ToString ('#,##0') + ' positions in '
+        + (NbMicroseconds / 1000).ToString ('0.000') + 'ms ('
+        + (NbMicroseconds / NbMoves).ToString ('0.000') + 'μs per position)'
       )
     End
   End;
