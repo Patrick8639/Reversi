@@ -151,6 +151,22 @@ Interface
         ReadOnly;
 
       /// <summary>
+      ///   Gets the number of dark discs.
+      /// </summary>
+      /// <value>The number of dark discs.</value>
+      [Aspect: OsNotifyPropertyChanged]
+      Property NbDarkDiscs : Int32
+        Read Private Write;
+
+      /// <summary>
+      ///   Gets the number of light discs.
+      /// </summary>
+      /// <value>The number of light discs.</value>
+      [Aspect: OsNotifyPropertyChanged]
+      Property NbLightDiscs : Int32
+        Read Private Write;
+
+      /// <summary>
       ///   Gets the number of rows.
       /// </summary>
       /// <value>The number of rows.</value>
@@ -326,6 +342,12 @@ Implementation
         _Board [GetIndex (5, 5)] := SquareStatus.Dark
       End;
 
+    End;
+
+    {-- NbXxxDiscs --}
+    If StartPosition <> StartPosition.Empty Then Begin
+      _NbDarkDiscs  := 2;
+      _NbLightDiscs := 2
     End
 
   End;
