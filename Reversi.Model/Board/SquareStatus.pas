@@ -69,9 +69,9 @@ Interface
       ///   The square is on the outside of the square.
       /// </summary>
       /// <remarks>
-      ///   The value is <b>15</b>.
+      ///   The value is <b>14</b>.
       /// </remarks>
-      Outside = 15,
+      Outside = 14,
 
       /// <summary>
       ///   The square is a moveable zone for the current player.
