@@ -68,7 +68,7 @@ Interface
 
     Private
 
-    {-- Field --}
+    {-- Fields --}
 
       /// <summary>
       ///   The internal board.
@@ -77,6 +77,15 @@ Interface
       ///   The index is calculated with the <see cref="GetIndex(Int32;Int32)" /> method.
       /// </remarks>
       _Board : Array Of SquareStatus;
+        ReadOnly;
+
+      /// <summary>
+      ///   The border of the position.
+      /// </summary>
+      /// <remarks>
+      ///   This is the list of all the empty squares near a disc.
+      /// </remarks>
+      _Border : HashSet < Int32>;
         ReadOnly;
 
     {-- Methods --}
@@ -380,6 +389,23 @@ Implementation
 
     End;
 
+    {-- Border --}
+    _Border := New HashSet <Int32> (32);
+    _Border.UnionWith ([
+      GetIndex (3, 3),
+      GetIndex (3, 4),
+      GetIndex (3, 5),
+      GetIndex (3, 6),
+      GetIndex (4, 3),
+      GetIndex (4, 6),
+      GetIndex (5, 3),
+      GetIndex (5, 6),
+      GetIndex (6, 3),
+      GetIndex (6, 4),
+      GetIndex (6, 5),
+      GetIndex (6, 6)
+    ]);
+
     {-- NbXxxDiscs --}
     If StartPosition <> StartPosition.Empty Then Begin
       _NbDarkDiscs  := 2;
@@ -413,7 +439,9 @@ Implementation
     _StartPosition := Board._StartPosition;
 
     _Board := New SquareStatus [(_NbColumns + 1) * (_NbRows + 2) + 1];
-    Board._Board.CopyTo (_Board, 0)
+    Board._Board.CopyTo (_Board, 0);
+
+    _Border := New HashSet <Int32> (Board._Border)
   End;
 
 (*---------------------------------------------------------------------------------------------*)
@@ -521,32 +549,31 @@ Implementation
               SquareStatus.Light
             Else SquareStatus.Dark;
 
-      For ix : Int32 := FirstPlayableIx To LastPlayableIx Do
-        If (_Board [ix] And SquareStatus.ContentMask) = SquareStatus.Empty Then Begin
-          Var Finished := False;
+      For StartPos In _Border Do Begin
+        Var Finished := False;
 
-          For Move In Moves Do Begin
-            Var Pos := ix + Move;
+        For Move In Moves Do Begin
+          Var Pos := StartPos + Move;
 
-            If (_Board [Pos] And SquareStatus.ContentMask) = Opponent Then
-              Loop Begin
-                Pos := Pos + Move;
+          If (_Board [Pos] And SquareStatus.ContentMask) = Opponent Then
+            Loop Begin
+              Pos := Pos + Move;
 
-                Var Content := (_Board [Pos] And SquareStatus.ContentMask);
+              Var Content := (_Board [Pos] And SquareStatus.ContentMask);
 
-                If Content <> Opponent Then Begin
-                  If Content = Player Then Begin
-                    Result.Add (ix);
-                    Finished := True
-                  End;
-                  Break
-                End
-              End;
+              If Content <> Opponent Then Begin
+                If Content = Player Then Begin
+                  Result.Add (StartPos);
+                  Finished := True
+                End;
+                Break
+              End
+            End;
 
-            If Finished Then
-              Break
-          End
+          If Finished Then
+            Break
         End
+      End
     End
 
   End;
@@ -660,6 +687,7 @@ Implementation
             SquareStatus.Light
           Else SquareStatus.Dark;
 
+    {-- Turns the discs --}
     For Move In Moves Do Begin
       Var Pos := Position + Move;
 
@@ -690,6 +718,7 @@ Implementation
 
     _Board [Position] := Player;
 
+    {-- Updates NbXxxDiscs --}
     If Player = SquareStatus.Dark Then Begin
       Inc (_NbDarkDiscs,  Result + 1);
       Dec (_NbLightDiscs, Result    )
@@ -697,7 +726,17 @@ Implementation
     Else Begin
       Inc (_NbLightDiscs, Result + 1);
       Dec (_NbDarkDiscs,  Result    )
+    End;
+
+    {-- Updates the border --}
+    _Border.Remove (Position);
+
+    For Move In Moves Do Begin
+      Var Pos := Position + Move;
+      If _Board [Pos] = SquareStatus.Empty Then
+        _Border.Add (Pos)
     End
+
   End;
 
 (*---------------------------------------------------------------------------------------------*)
