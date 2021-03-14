@@ -39,6 +39,12 @@
       <Private>True</Private>
       <HintPath>..\Reversi.Model\Bin\Debug\Reversi.Model.dll</HintPath>
     </ProjectReference>
+    <ProjectReference Include="..\..\OxyLib\OrdinaSoft.Base\OrdinaSoft.Base.elements">
+      <Name>OrdinaSoft.Base</Name>
+      <Project>{deb1f07c-3dd6-4799-9aa2-6502612727d8}</Project>
+      <Private>True</Private>
+      <HintPath>..\..\OxyLib\OrdinaSoft.Base\Bin\Debug\OrdinaSoft.Base.dll</HintPath>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.Echoes.targets" />
 </Project>

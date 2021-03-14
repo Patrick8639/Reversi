@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\OxyLib\OrdinaSoft.Base\OrdinaSoft.Base.elements" />
     <ProjectReference Include="..\Reversi.Model\Reversi.Model.elements" />
   </ItemGroup>
 
