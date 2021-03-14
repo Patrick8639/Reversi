@@ -454,36 +454,61 @@ Implementation
   Begin
     Result := New List <Int32> (32);
 
-    Var Opponent :=
-          If Player = SquareStatus.Dark Then
-            SquareStatus.Light
-          Else SquareStatus.Dark;
+    {-- Special case for the first 4 discs of an empty position --}
+    If (_NbDarkDiscs + _NbLightDiscs) < 4 Then Begin
 
-    For ix : Int32 := FirstPlayableIx To LastPlayableIx Do
-      If (_Board [ix] And SquareStatus.ContentMask) = SquareStatus.Empty Then Begin
-        Var Finished := False;
+      With Pos := GetIndex (4, 4) Do
+        If _Board [Pos] And SquareStatus.ContentMask = SquareStatus.Empty Then
+          Result.Add (Pos);
 
-        For Move In Moves Do Begin
-          Var Pos := ix + Move;
+      With Pos := GetIndex (4, 5) Do
+        If _Board [Pos] And SquareStatus.ContentMask = SquareStatus.Empty Then
+          Result.Add (Pos);
 
-          If (_Board [Pos] And SquareStatus.ContentMask) = Opponent Then
-            Loop Begin
-              Pos := Pos + Move;
+      With Pos := GetIndex (5, 4) Do
+        If _Board [Pos] And SquareStatus.ContentMask = SquareStatus.Empty Then
+          Result.Add (Pos);
 
-              Var Content := (_Board [Pos] And SquareStatus.ContentMask);
+      With Pos := GetIndex (5, 5) Do
+        If _Board [Pos] And SquareStatus.ContentMask = SquareStatus.Empty Then
+          Result.Add (Pos);
 
-              If Content <> Opponent Then Begin
-                If Content = Player Then
-                  Result.Add (ix);
-                Finished := True;
-                Break
-              End
-            End;
+    End
 
-          If Finished Then
-            Break
+    {-- Normal case --}
+    Else Begin
+      Var Opponent :=
+            If Player = SquareStatus.Dark Then
+              SquareStatus.Light
+            Else SquareStatus.Dark;
+
+      For ix : Int32 := FirstPlayableIx To LastPlayableIx Do
+        If (_Board [ix] And SquareStatus.ContentMask) = SquareStatus.Empty Then Begin
+          Var Finished := False;
+
+          For Move In Moves Do Begin
+            Var Pos := ix + Move;
+
+            If (_Board [Pos] And SquareStatus.ContentMask) = Opponent Then
+              Loop Begin
+                Pos := Pos + Move;
+
+                Var Content := (_Board [Pos] And SquareStatus.ContentMask);
+
+                If Content <> Opponent Then Begin
+                  If Content = Player Then
+                    Result.Add (ix);
+                  Finished := True;
+                  Break
+                End
+              End;
+
+            If Finished Then
+              Break
+          End
         End
-      End
+    End
+
   End;
 
 
