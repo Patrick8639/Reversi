@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+  English resources for the Reversi.Model assembly.
+  
+  Author: OrdinaSoft
+          Patrick Lanz
+          Lausanne
+          info@ordinasoft.ch
+
+  First version: March 14, 2021
+-->
+
+
+<Texts>
+
+
+  <!-- Start positions -->
+  <Group Name="StartPosition">
+    <Text Name="Empty">Empty board</Text>
+    <Text Name="LightBottom">Light discs at bottom</Text>
+    <Text Name="LightLeft">Light discs at left</Text>
+    <Text Name="LightRight">Light discs at right</Text>
+    <Text Name="LightTop">Light discs at top</Text>
+    <Text Name="Standard">Standard</Text>
+    <Text Name="StandardInverted">Standard inverted</Text>
+  </Group>
+
+
+</Texts>
+

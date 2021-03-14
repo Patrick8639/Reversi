@@ -35,6 +35,14 @@
     <Compile Include="Properties\AssemblyInfo.pas" />
     <Compile Include="Board\SquareStatus.pas" />
     <Compile Include="Board\Board.pas" />
+    <Compile Include="Board\StartPosition\StartPosition.pas" />
+    <Compile Include="Board\StartPosition\StartPosition+Values.pas" />
+    <EmbeddedResource Include="TextResources\en.xml">
+      <SubType>Form</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextResources\fr.xml">
+      <SubType>Form</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OrdinaSoft.Aspects">

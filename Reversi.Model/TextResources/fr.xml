@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+  French resources for the Reversi.Model assembly.
+  
+  Author: OrdinaSoft
+          Patrick Lanz
+          Lausanne
+          info@ordinasoft.ch
+
+  First version: March 14, 2021
+-->
+
+
+<Texts>
+
+
+  <!-- Start positions -->
+  <Group Name="StartPosition">
+    <Text Name="Empty">Plateau vide</Text>
+    <Text Name="LightBottom">Pions blancs en bas</Text>
+    <Text Name="LightLeft">Pions blancs à gauche</Text>
+    <Text Name="LightRight">Pions blancs à droite</Text>
+    <Text Name="LightTop">Pions blancs en haut</Text>
+    <Text Name="Standard">Standard</Text>
+    <Text Name="StandardInverted">Standard inversé</Text>
+  </Group>
+
+
+</Texts>
+

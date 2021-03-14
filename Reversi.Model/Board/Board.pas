@@ -26,6 +26,8 @@ Interface
     /// <summary>
     ///   A board.
     /// </summary>
+    /// <seealso cref="SquareStatus" />
+    /// <seealso cref="StartPosition" />
 
     Board = Public Sealed Class
 
