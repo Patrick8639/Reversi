@@ -74,7 +74,7 @@ Interface
       ///   The internal board.
       /// </summary>
       /// <remarks>
-      ///   The index is calculated as 
+      ///   The index is calculated with the <see cref="GetIndex(Int32;Int32)" /> method.
       /// </remarks>
       _Board : Array Of SquareStatus;
         ReadOnly;
@@ -318,7 +318,7 @@ Implementation
     _NbRows        := 8;
     _StartPosition := StartPosition;
 
-    {-- Initializes the board --}
+    {-- Board --}
     _Board := New SquareStatus [(_NbColumns + 1) * (_NbRows + 2) + 1];
 
     With NbRows1 := _NbRows + 1 Do
