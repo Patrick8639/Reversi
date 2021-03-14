@@ -117,14 +117,27 @@ Interface
     {-- Constructors --}
 
       /// <summary>
-      ///   Initializes a standard 8 x 8 board.
+      ///   Initializes an 8 x 8 board, with the
+      ///   <see cref="Reversi.Model.StartPosition.Standard">standard start position</see>.
       /// </summary>
       Constructor;
+
+      /// <summary>
+      ///   Initializes an 8 x 8 board, with the specified start position.
+      /// </summary>
+      /// <param name="StartPosition">The start position.</param>
+      /// <exception cref="ArgumentNullException">
+      ///   <paramref name="StartPosition" /> is <b>null</b>.
+      /// </exception>
+      Constructor (StartPosition : StartPosition);
 
       /// <summary>
       ///   Initializes a board from an existing one.
       /// </summary>
       /// <param name="Board">The new board.</param>
+      /// <exception cref="ArgumentNullException">
+      ///   <paramref name="Board" /> is <b>null</b>.
+      /// </exception>
       Constructor (Board : Board);
 
     {-- Properties --}
@@ -134,16 +147,16 @@ Interface
       /// </summary>
       /// <value>The number of columns.</value>
       [Aspect: OsProperty]
-      Property NbColumns : Int32
-        Read;
+      Property NbColumns : Int32;
+        ReadOnly;
 
       /// <summary>
       ///   Gets the number of rows.
       /// </summary>
       /// <value>The number of rows.</value>
       [Aspect: OsProperty]
-      Property NbRows : Int32
-        Read;
+      Property NbRows : Int32;
+        ReadOnly;
 
       /// <summary>
       ///   Gets or sets the status of a square.
@@ -170,6 +183,14 @@ Interface
         Read  _Board [CheckAndGetIndex (NoRow, NoColumn)]
         Write _Board [CheckAndGetIndex (NoRow, NoColumn)];
         Default;
+
+      /// <summary>
+      ///   Gets the start position.
+      /// </summary>
+      /// <value>The start position.</value>
+      [Aspect: OsProperty]
+      Property StartPosition : StartPosition;
+        ReadOnly;
 
     {-- Methods --}
 
@@ -213,14 +234,37 @@ Implementation
 (* Constructors. *)
 
   // <summary>
-  //   Initializes a standard 8 x 8 board.
+  //   Initializes an 8 x 8 board, with the
+  //   <see cref="Reversi.Model.StartPosition.Standard">standard start position</see>.
   // </summary>
 
   Constructor Board;
 
   Begin
-    _NbColumns := 8;
-    _NbRows    := 8;
+    Constructor (StartPosition.Standard)
+  End;
+
+
+
+  // <summary>
+  //   Initializes an 8 x 8 board, with the specified start position.
+  // </summary>
+  // <param name="StartPosition">The start position.</param>
+  // <exception cref="ArgumentNullException">
+  //   <paramref name="StartPosition" /> is <b>null</b>.
+  // </exception>
+
+  Constructor Board (
+    StartPosition : StartPosition
+  );
+
+  Begin
+    If Not Assigned (StartPosition) Then
+      Raise New ArgumentNullException (NameOf (StartPosition));
+
+    _NbColumns     := 8;
+    _NbRows        := 8;
+    _StartPosition := StartPosition;
 
     {-- Initializes the board --}
     _Board := New SquareStatus [(_NbColumns + 1) * (_NbRows + 2) + 1];
@@ -235,7 +279,54 @@ Implementation
       _Board [GetIndex (NoRow, 9)] := SquareStatus.Outside;
 
     _Board [GetIndex (0, 0)] := SquareStatus.Outside;
-    _Board [GetIndex (9, 9)] := SquareStatus.Outside
+    _Board [GetIndex (9, 9)] := SquareStatus.Outside;
+
+    {-- Start position --}
+    Case StartPosition Of
+
+      StartPosition.LightBottom : Begin
+        _Board [GetIndex (4, 4)] := SquareStatus.Black;
+        _Board [GetIndex (4, 5)] := SquareStatus.Black;
+        _Board [GetIndex (5, 4)] := SquareStatus.White;
+        _Board [GetIndex (5, 5)] := SquareStatus.White
+      End;
+
+      StartPosition.LightLeft : Begin
+        _Board [GetIndex (4, 4)] := SquareStatus.White;
+        _Board [GetIndex (4, 5)] := SquareStatus.Black;
+        _Board [GetIndex (5, 4)] := SquareStatus.White;
+        _Board [GetIndex (5, 5)] := SquareStatus.Black
+      End;
+
+      StartPosition.LightRight : Begin
+        _Board [GetIndex (4, 4)] := SquareStatus.Black;
+        _Board [GetIndex (4, 5)] := SquareStatus.White;
+        _Board [GetIndex (5, 4)] := SquareStatus.Black;
+        _Board [GetIndex (5, 5)] := SquareStatus.White
+      End;
+
+      StartPosition.LightTop : Begin
+        _Board [GetIndex (4, 4)] := SquareStatus.White;
+        _Board [GetIndex (4, 5)] := SquareStatus.White;
+        _Board [GetIndex (5, 4)] := SquareStatus.Black;
+        _Board [GetIndex (5, 5)] := SquareStatus.Black
+      End;
+
+      StartPosition.Standard : Begin
+        _Board [GetIndex (4, 4)] := SquareStatus.White;
+        _Board [GetIndex (4, 5)] := SquareStatus.Black;
+        _Board [GetIndex (5, 4)] := SquareStatus.Black;
+        _Board [GetIndex (5, 5)] := SquareStatus.White
+      End;
+
+      StartPosition.Standard : Begin
+        _Board [GetIndex (4, 4)] := SquareStatus.Black;
+        _Board [GetIndex (4, 5)] := SquareStatus.White;
+        _Board [GetIndex (5, 4)] := SquareStatus.White;
+        _Board [GetIndex (5, 5)] := SquareStatus.Black
+      End;
+
+    End
 
   End;
 
@@ -245,14 +336,21 @@ Implementation
   //   Initializes a board from an existing one.
   // </summary>
   // <param name="Board">The new board.</param>
+  // <exception cref="ArgumentNullException">
+  //   <paramref name="Board" /> is <b>null</b>.
+  // </exception>
 
   Constructor Board (
     Board : Board
   );
 
   Begin
-    _NbColumns := Board._NbColumns;
-    _NbRows    := Board._NbRows;
+    If Not Assigned (Board) Then
+      Raise New ArgumentNullException (NameOf (Board));
+
+    _NbColumns     := Board._NbColumns;
+    _NbRows        := Board._NbRows;
+    _StartPosition := Board._StartPosition;
 
     Board._Board.CopyTo (_Board, 0)
   End;
