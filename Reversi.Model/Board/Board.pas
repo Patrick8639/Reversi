@@ -220,6 +220,17 @@ Interface
     {-- Methods --}
 
       /// <summary>
+      ///   Gets the opponent of a player.
+      /// </summary>
+      /// <param name="Player">The player.</param>
+      /// <returns>The opponent.</returns>
+      /// <exception cref="ArgumentException">
+      ///   <paramref name="Player" /> is neither <see cref="SquareStatus.Dark">Dark</see>, nor
+      ///   <see cref="SquareStatus.Light">Light</see>.
+      /// </exception>
+      Class Method GetOpponent (Player : SquareStatus) : SquareStatus;
+
+      /// <summary>
       ///   Clears all the marks on the board.
       /// </summary>
       Method ClearMarks;
@@ -544,10 +555,7 @@ Implementation
 
     {-- Normal case --}
     Else Begin
-      Var Opponent :=
-            If Player = SquareStatus.Dark Then
-              SquareStatus.Light
-            Else SquareStatus.Dark;
+      Var Opponent := GetOpponent (Player);
 
       For StartPos In _Border Do Begin
         Var Finished := False;
@@ -668,24 +676,16 @@ Implementation
   ) : Int32;
 
   Begin
-    Case Player Of
-      SquareStatus.Dark,
-      SquareStatus.Light : ;  // normal case
-    Else
-      Raise New ArgumentException ('Must be Dark or Light.', NameOf (Player));
-    End;
-
     If Not (0 <= Position < _Board.Length) Then
       Raise New ArgumentException ($'Must be between 0 and {_Board.Length}.', NameOf (Position));
+    If Not _Border.Contains (Position) Then
+      Raise New InvalidOperationException ('This is not a valid move.');
+
+    Var Opponent := GetOpponent (Player);  // also checks the value
 
     ClearMarks;
 
     Result := 0;
-
-    Var Opponent :=
-          If Player = SquareStatus.Dark Then
-            SquareStatus.Light
-          Else SquareStatus.Dark;
 
     {-- Turns the discs --}
     For Move In Moves Do Begin
@@ -720,12 +720,12 @@ Implementation
 
     {-- Updates NbXxxDiscs --}
     If Player = SquareStatus.Dark Then Begin
-      Inc (_NbDarkDiscs,  Result + 1);
-      Dec (_NbLightDiscs, Result    )
+      NbDarkDiscs  := _NbDarkDiscs  + Result + 1;
+      NbLightDiscs := _NbLightDiscs - Result
     End
     Else Begin
-      Inc (_NbLightDiscs, Result + 1);
-      Dec (_NbDarkDiscs,  Result    )
+      NbLightDiscs := _NbDarkDiscs  + Result + 1;
+      NbDarkDiscs  := _NbLightDiscs - Result
     End;
 
     {-- Updates the border --}
@@ -741,6 +741,31 @@ Implementation
 
 (*---------------------------------------------------------------------------------------------*)
 (* Tools. *)
+
+  // <summary>
+  //   Gets the opponent of a player.
+  // </summary>
+  // <param name="Player">The player.</param>
+  // <returns>The opponent.</returns>
+  // <exception cref="ArgumentException">
+  //   <paramref name="Player" /> is neither <see cref="SquareStatus.Dark">Dark</see>, nor
+  //   <see cref="SquareStatus.Light">Light</see>.
+  // </exception>
+
+  Class Method Board.GetOpponent (
+    Player : SquareStatus
+  ) : SquareStatus;
+
+  Begin
+    Case Player Of
+      SquareStatus.Dark  : Exit SquareStatus.Light;
+      SquareStatus.Light : Exit SquareStatus.Dark;
+    Else
+      Raise New ArgumentException ('Must be Dark or Light.', NameOf (Player))
+    End
+  End;
+
+
 
   // <summary>
   //   Clears all the marks on the board.
