@@ -161,7 +161,7 @@ Interface
     {-- Constructor --}
 
       /// <summary>
-      ///   Initializes a start position type without any value.
+      ///   Initializes a start position without any value.
       /// </summary>
       /// <remarks>
       ///   This constructor is used internally only, but must be defined as public because of
@@ -169,26 +169,6 @@ Interface
       /// </remarks>
       Constructor;
         Empty;
-
-    {-- Operator --}
-
-      /// <summary>
-      ///   Casts an XML attribute to an <b>StartPosition</b>.
-      /// </summary>
-      /// <param name="Attr">The XML attribute to cast. Can be <b>null</b>.</param>
-      /// <returns>
-      ///   <b>null</b>, if <paramref name="Attr" /> is <b>null</b>;<br />
-      ///   otherwise, the <b>StartPosition</b> that corresponds to the XML attribute.
-      /// </returns>
-      /// <exception cref="FormatException">
-      ///   The attribute value is neither an integer number nor a valid name.
-      /// </exception>
-      /// <remarks>
-      ///   If the attribute is not <b>null</b>, but an unknown value, the result is an
-      ///   automatically generated <b>StartPosition</b>, with the value as its name and its
-      ///   value.
-      /// </remarks>
-      Class Operator Explicit (Attr : XAttribute) : StartPosition;
 
     End;
 
@@ -247,36 +227,11 @@ Implementation
     Value : Int32
   );
 
+  Require
+    Assigned (Name);
+
   Begin
     Inherited Constructor (Name, Value, ResNamePrefix + Name)
-  End;
-
-(*---------------------------------------------------------------------------------------------*)
-(* XML. *)
-
-  // <summary>
-  //   Casts an XML attribute to an <b>StartPosition</b>.
-  // </summary>
-  // <param name="Attr">The XML attribute to cast. Can be <b>null</b>.</param>
-  // <returns>
-  //   <b>null</b>, if <paramref name="Attr" /> is <b>null</b>;<br />
-  //   otherwise, the <b>StartPosition</b> that corresponds to the XML attribute.
-  // </returns>
-  // <exception cref="FormatException">
-  //   The attribute value is neither an integer number nor a valid name.
-  // </exception>
-  // <remarks>
-  //   If the attribute is not <b>null</b>, but an unknown value, the result is an
-  //   automatically generated <b>StartPosition</b>, with the value as its name and its
-  //   value.
-  // </remarks>
-
-  Class Operator StartPosition.Explicit (
-    Attr : XAttribute
-  ) : StartPosition;
-
-  Begin
-    Result := FromXAttribute (Attr)
   End;
 
 (*---------------------------------------------------------------------------------------------*)
