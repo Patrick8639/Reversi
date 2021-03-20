@@ -26,6 +26,35 @@ Interface
     /// <summary>
     ///   A board transformation.
     /// </summary>
+    /// <remarks>
+    ///   <para>
+    ///     As the Reversi board has no "preferential" direction (as in chess for example), the
+    ///     board can be rotated or have a line symmetry with the same position and the same best
+    ///     move. So a specific position has 8 different boards. This class defines the
+    ///     transforms that permits to get the original position from a transformed one.
+    ///   </para>
+    ///   <para>
+    ///     The <see cref="Null">Null</see> property is not defined in this class.
+    ///   </para>
+    ///
+    ///   <h3>Text resources</h3>
+    ///   <para>
+    ///     All the texts used by the class are taken from text resources files. The assembly
+    ///     defines the texts in English and in French. Other languages can be added with the
+    ///     <see cref="TextResourcesDict">text resources dictionary</see>.
+    ///   </para>
+    ///   <para>
+    ///     The texts resources are in the <c>Reversi.BoardTransform</c> group, with the name of
+    ///     the start position appended.
+    ///   </para>
+    ///
+    ///   <h3>Values</h3>
+    ///   <para>
+    ///     The values are defined in the <see cref="Values" /> nested class.
+    ///   </para>
+    ///
+    /// </remarks>
+    /// <seealso cref="Values" />
 
     BoardTransform = Public Partial Sealed Class (
       DiscreteValue <BoardTransform>

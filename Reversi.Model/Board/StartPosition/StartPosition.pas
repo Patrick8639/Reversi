@@ -47,7 +47,7 @@ Interface
     ///
     ///   <h3>Values</h3>
     ///   <para>
-    ///     The values are defined in the <see cref="Values" /> bested class.
+    ///     The values are defined in the <see cref="Values" /> nested class.
     ///   </para>
     ///
     /// </remarks>

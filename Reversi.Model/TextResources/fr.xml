@@ -15,7 +15,18 @@
 <Texts>
 
 
-  <!-- Start positions -->
+  <Group Name="BoardTransform">
+    <Text Name="LeftBottomHorizontal">Du coin en bas à gauche, avec ligne horizontale</Text>
+    <Text Name="LeftBottomVertical">Du coin en bas à gauche, avec ligne verticale</Text>
+    <Text Name="LeftTopHorizontal">Du coin en haut à gauche, avec ligne horizontale</Text>
+    <Text Name="LeftTopVertical">Du coin en haut à gauche, avec ligne verticale</Text>
+    <Text Name="RightBottomHorizontal">Du coin en bas à droite, avec ligne horizontale</Text>
+    <Text Name="RightBottomVertical">Du coin en bas à droite, avec ligne verticale</Text>
+    <Text Name="RightTopHorizontal">Du coin en haut à droite, avec ligne horizontale</Text>
+    <Text Name="RightTopVertical">Du coin en haut à droite, avec ligne verticale</Text>
+  </Group>
+
+
   <Group Name="StartPosition">
     <Text Name="Empty">Plateau vide</Text>
     <Text Name="LightBottom">Pions blancs en bas</Text>

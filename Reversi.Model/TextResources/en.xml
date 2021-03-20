@@ -15,7 +15,18 @@
 <Texts>
 
 
-  <!-- Start positions -->
+  <Group Name="BoardTransform">
+    <Text Name="LeftBottomHorizontal">From left bottom corner, with horizontal row</Text>
+    <Text Name="LeftBottomVertical">From left bottom corner, with vertical row</Text>
+    <Text Name="LeftTopHorizontal">From left top corner, with horizontal row</Text>
+    <Text Name="LeftTopVertical">From left top corner, with vertical row</Text>
+    <Text Name="RightBottomHorizontal">From right bottom corner, with horizontal row</Text>
+    <Text Name="RightBottomVertical">From right bottom corner, with vertical row</Text>
+    <Text Name="RightTopHorizontal">From right top corner, with horizontal row</Text>
+    <Text Name="RightTopVertical">From right top corner, with vertical row</Text>
+  </Group>
+
+
   <Group Name="StartPosition">
     <Text Name="Empty">Empty board</Text>
     <Text Name="LightBottom">Light discs at bottom</Text>
