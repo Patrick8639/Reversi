@@ -43,6 +43,8 @@
     <EmbeddedResource Include="TextResources\fr.xml">
       <SubType>Form</SubType>
     </EmbeddedResource>
+    <Compile Include="Board\Transform\BoardTransform.pas" />
+    <Compile Include="Board\Transform\BoardTransform+Values.pas" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OrdinaSoft.Aspects">
