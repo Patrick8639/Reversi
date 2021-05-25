@@ -9,7 +9,7 @@
             Lausanne
             info@ordinasoft.ch
 
-   First version: March 14, 2021
+   First version: March 20, 2021
 *)
 
 
@@ -32,7 +32,9 @@ Interface
     Public Const
 
       /// <summary>
-      ///   The value of the <see cref="BoardTransform.LeftBottomHorizontal">LeftBottomHorizontal</see> board transformation.
+      ///   The value of the
+      ///   <see cref="BoardTransform.LeftBottomHorizontal">LeftBottomHorizontal</see> board
+      ///   transformation.
       /// </summary>
       /// <remarks>
       ///   The value is <b>1</b>.
@@ -40,7 +42,9 @@ Interface
       LeftBottomHorizontal = 1;
 
       /// <summary>
-      ///   The value of the <see cref="BoardTransform.LeftBottomVertical">LeftBottomVertical</see> board transformation.
+      ///   The value of the
+      ///   <see cref="BoardTransform.LeftBottomVertical">LeftBottomVertical</see> board
+      ///   transformation.
       /// </summary>
       /// <remarks>
       ///   The value is <b>2</b>.
@@ -48,7 +52,8 @@ Interface
       LeftBottomVertical = 2;
 
       /// <summary>
-      ///   The value of the <see cref="BoardTransform.LeftTopHorizontal">LeftTopHorizontal</see> board transformation.
+      ///   The value of the <see cref="BoardTransform.LeftTopHorizontal">LeftTopHorizontal</see>
+      ///   board transformation.
       /// </summary>
       /// <remarks>
       ///   The value is <b>3</b>.
@@ -56,7 +61,8 @@ Interface
       LeftTopHorizontal = 3;
 
       /// <summary>
-      ///   The value of the <see cref="BoardTransform.LeftTopVertical">LeftTopVertical</see> board transformation.
+      ///   The value of the <see cref="BoardTransform.LeftTopVertical">LeftTopVertical</see>
+      ///   board transformation.
       /// </summary>
       /// <remarks>
       ///   The value is <b>4</b>.
@@ -64,7 +70,9 @@ Interface
       LeftTopVertical = 4;
 
       /// <summary>
-      ///   The value of the <see cref="BoardTransform.RightBottomHorizontal">RightBottomHorizontal</see> board transformation.
+      ///   The value of the
+      ///   <see cref="BoardTransform.RightBottomHorizontal">RightBottomHorizontal</see> board
+      ///   transformation.
       /// </summary>
       /// <remarks>
       ///   The value is <b>5</b>.
@@ -72,7 +80,9 @@ Interface
       RightBottomHorizontal = 5;
 
       /// <summary>
-      ///   The value of the <see cref="BoardTransform.RightBottomVertical">RightBottomVertical</see> board transformation.
+      ///   The value of the
+      ///   <see cref="BoardTransform.RightBottomVertical">RightBottomVertical</see> board
+      ///   transformation.
       /// </summary>
       /// <remarks>
       ///   The value is <b>6</b>.
@@ -80,7 +90,9 @@ Interface
       RightBottomVertical = 6;
 
       /// <summary>
-      ///   The value of the <see cref="BoardTransform.RightTopHorizontal">RightTopHorizontal</see> board transformation.
+      ///   The value of the
+      ///   <see cref="BoardTransform.RightTopHorizontal">RightTopHorizontal</see> board
+      ///   transformation.
       /// </summary>
       /// <remarks>
       ///   The value is <b>7</b>.
@@ -88,7 +100,8 @@ Interface
       RightTopHorizontal = 7;
 
       /// <summary>
-      ///   The value of the <see cref="BoardTransform.RightTopVertical">RightTopVertical</see> board transformation.
+      ///   The value of the <see cref="BoardTransform.RightTopVertical">RightTopVertical</see>
+      ///   board transformation.
       /// </summary>
       /// <remarks>
       ///   The value is <b>8</b>.

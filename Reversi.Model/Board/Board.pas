@@ -88,7 +88,7 @@ Interface
       _Border : HashSet < Int32>;
         ReadOnly;
 
-    {-- Methods --}
+    {-- Method --}
 
       /// <summary>
       ///   Checks and gets the index of a square.
@@ -107,6 +107,10 @@ Interface
       ///   1 to <see cref="NbColumns" /> for <paramref name="NoColumn" />.
       /// </remarks>
       Method CheckAndGetIndex (NoRow, NoColumn : Int32) : Int32;
+
+    Assembly
+
+    {-- Method --}
 
       /// <summary>
       ///   Gets the index of a square.

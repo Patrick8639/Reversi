@@ -45,6 +45,7 @@
     </EmbeddedResource>
     <Compile Include="Board\Transform\BoardTransform.pas" />
     <Compile Include="Board\Transform\BoardTransform+Values.pas" />
+    <Compile Include="Board\Transform\BoardTransform+Info.pas" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OrdinaSoft.Aspects">
