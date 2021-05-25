@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Mode>Echoes</Mode>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>.NETCore</TargetFramework>
+    <RootNamespace>WebClient</RootNamespace>
+    <ProjectGuid>{9476028D-889F-4343-9B1E-40C04D08CB15}</ProjectGuid>
+    <NETCoreRuntime>Microsoft.AspNetCore.App</NETCoreRuntime>
+    <AssemblyName>WebClient</AssemblyName>
+    <Name>WebClient</Name>
+    <EmitTailCalls>True</EmitTailCalls>
+    <SuppressWarnings>W27</SuppressWarnings>
+    <WarnOnCaseMismatch>False</WarnOnCaseMismatch>
+    <XmlDoc>True</XmlDoc>
+    <XmlDocWarningLevel>WarningOnPrivateMembers</XmlDocWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <Optimize>False</Optimize>
+    <OutputPath>.\Bin\Debug</OutputPath>
+    <GeneratePDB>True</GeneratePDB>
+    <EnableAsserts>True</EnableAsserts>
+    <GenerateMDB>True</GenerateMDB>
+    <ConditionalDefines>DEBUG;TRACE;</ConditionalDefines>
+    <EmitTailCalls>False</EmitTailCalls>
+    <EnableInlining>False</EnableInlining>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputPath>.\Bin\Release</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Program.pas" />
+    <Compile Include="Startup.pas" />
+    <None Include="Properties\launchSettings.json" />
+    <Razor Include="Pages\Index.cshtml" />
+    <Compile Include="Pages\Index.cshtml.pas" />
+    <Content Include="wwwroot/**">
+      <Publish>True</Publish>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\OxyLib\OrdinaSoft.Base\OrdinaSoft.Base.elements">
+      <Name>OrdinaSoft.Base</Name>
+      <Project>{deb1f07c-3dd6-4799-9aa2-6502612727d8}</Project>
+      <Private>True</Private>
+      <HintPath>..\..\OxyLib\OrdinaSoft.Base\Bin\Debug\OrdinaSoft.Base.dll</HintPath>
+    </ProjectReference>
+    <ProjectReference Include="..\Reversi.Model\Reversi.Model.elements">
+      <Name>Reversi.Model</Name>
+      <Project>{e09a53e1-bd48-4515-9a67-b70b5147a7c5}</Project>
+      <Private>True</Private>
+      <HintPath>..\Reversi.Model\Bin\Debug\Reversi.Model.dll</HintPath>
+    </ProjectReference>
+    <NuGetReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server:*" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.targets" />
+</Project>

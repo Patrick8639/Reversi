@@ -1,0 +1,715 @@
+﻿<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Reversi.Model</name>
+    </assembly>
+    <members>
+        <member name="T:Reversi.Model.Board">
+            <summary>
+               A board.
+             </summary>
+             <seealso cref="T:Reversi.Model.SquareStatus" />
+             <seealso cref="P:Reversi.Model.Board.StartPosition" />
+        </member>
+        <member name="F:Reversi.Model.Board.FirstPlayableIx">
+            <summary>
+               The first playable index.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.Board.LastPlayableIx">
+            <summary>
+               The last playable index.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.Board.Moves">
+            <summary>
+               The legal moves.
+             </summary>
+             <remarks>
+               As the internal board is represented as a one-dimension array, the moves are
+               expressed as a single number.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.Board._Board">
+            <summary>
+               The internal board.
+             </summary>
+             <remarks>
+               The index is calculated with the <see cref="M:Reversi.Model.Board.GetIndex(System.Int32,System.Int32)" /> method.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.Board._Border">
+            <summary>
+               The border of the position.
+             </summary>
+             <remarks>
+               This is the list of all the empty squares near a disc.
+             </remarks>
+        </member>
+        <member name="M:Reversi.Model.Board.CheckAndGetIndex(System.Int32,System.Int32)">
+            <summary>
+               Checks and gets the index of a square.
+             </summary>
+             <param name="NoRow">The row number.</param>
+             <param name="NoColumn">The column number.</param>
+             <returns>The index.</returns>
+             <exception cref="T:System.IndexOutOfRangeException">
+               <paramref name="NoRow" /> is less than 1 or greater than <see cref="P:Reversi.Model.Board.NbRows" />.<br />
+               -or-<br />
+               <paramref name="NoColumn" /> is less than 1 or greater than <see cref="P:Reversi.Model.Board.NbColumns" />.
+             </exception>
+             <remarks>
+               The outside rows are reserved for <see cref="T:Reversi.Model.SquareStatus">Outside</see> squares, so
+               the playable indexes are 1 to <see cref="P:Reversi.Model.Board.NbRows" /> for <paramref name="NoRow" /> and
+               1 to <see cref="P:Reversi.Model.Board.NbColumns" /> for <paramref name="NoColumn" />.
+             </remarks>
+        </member>
+        <member name="M:Reversi.Model.Board.GetIndex(System.Int32,System.Int32)">
+            <summary>
+               Gets the index of a square.
+             </summary>
+             <param name="NoRow">The row number.</param>
+             <param name="NoColumn">The column number.</param>
+             <returns>The index.</returns>
+             <remarks>
+               The outside rows are reserved for <see cref="T:Reversi.Model.SquareStatus">Outside</see> squares, so
+               the playable indexes are 1 to <see cref="P:Reversi.Model.Board.NbRows" /> for <paramref name="NoRow" /> and
+               1 to <see cref="P:Reversi.Model.Board.NbColumns" /> for <paramref name="NoColumn" />.
+             </remarks>
+        </member>
+        <member name="M:Reversi.Model.Board.#ctor">
+            <summary>
+               Initializes an 8 x 8 board, with the
+               <see cref="F:Reversi.Model.StartPosition.Standard">standard start position</see>.
+             </summary>
+        </member>
+        <member name="M:Reversi.Model.Board.#ctor(Reversi.Model.StartPosition)">
+            <summary>
+               Initializes an 8 x 8 board, with the specified start position.
+             </summary>
+             <param name="StartPosition">The start position.</param>
+             <exception cref="T:System.ArgumentNullException">
+               <paramref name="StartPosition" /> is <b>null</b>.
+             </exception>
+        </member>
+        <member name="M:Reversi.Model.Board.#ctor(Reversi.Model.Board)">
+            <summary>
+               Initializes a board from an existing one.
+             </summary>
+             <param name="Board">The new board.</param>
+             <exception cref="T:System.ArgumentNullException">
+               <paramref name="Board" /> is <b>null</b>.
+             </exception>
+        </member>
+        <member name="P:Reversi.Model.Board.NbColumns">
+            <summary>
+               Gets the number of columns.
+             </summary>
+             <value>The number of columns.</value>
+        </member>
+        <member name="P:Reversi.Model.Board.NbDarkDiscs">
+            <summary>
+               Gets the number of dark discs.
+             </summary>
+             <value>The number of dark discs.</value>
+        </member>
+        <member name="P:Reversi.Model.Board.NbLightDiscs">
+            <summary>
+               Gets the number of light discs.
+             </summary>
+             <value>The number of light discs.</value>
+        </member>
+        <member name="P:Reversi.Model.Board.NbRows">
+            <summary>
+               Gets the number of rows.
+             </summary>
+             <value>The number of rows.</value>
+        </member>
+        <member name="P:Reversi.Model.Board.Square(System.Int32,System.Int32)">
+            <summary>
+               Gets or sets the status of a square.
+             </summary>
+             <param name="NoRow">The row number.</param>
+             <param name="NoColumn">The column number.</param>
+             <value>The status of the specified square</value>
+             <exception cref="T:System.IndexOutOfRangeException">
+               <paramref name="NoRow" /> is less than 1 or greater than <see cref="P:Reversi.Model.Board.NbRows" />.<br />
+               -or-<br />
+               <paramref name="NoColumn" /> is less than 1 or greater than <see cref="P:Reversi.Model.Board.NbColumns" />.
+             </exception>
+             <remarks>
+               <para>
+                 This is the default indexed property.
+               </para>
+               <para>
+                 The outside rows are reserved for <see cref="T:Reversi.Model.SquareStatus">Outer</see> squares, so
+                 the playable indexes are 1 to <see cref="P:Reversi.Model.Board.NbRows" /> for <paramref name="NoRow" />
+                 and 1 to <see cref="P:Reversi.Model.Board.NbColumns" /> for <paramref name="NoColumn" />.
+               </para>
+             </remarks>
+        </member>
+        <member name="P:Reversi.Model.Board.StartPosition">
+            <summary>
+               Gets the start position.
+             </summary>
+             <value>The start position.</value>
+        </member>
+        <member name="M:Reversi.Model.Board.GetOpponent(Reversi.Model.SquareStatus)">
+            <summary>
+               Gets the opponent of a player.
+             </summary>
+             <param name="Player">The player.</param>
+             <returns>The opponent.</returns>
+             <exception cref="T:System.ArgumentException">
+               <paramref name="Player" /> is neither <see cref="F:Reversi.Model.SquareStatus.Dark">Dark</see>, nor
+               <see cref="F:Reversi.Model.SquareStatus.Light">Light</see>.
+             </exception>
+        </member>
+        <member name="M:Reversi.Model.Board.ClearMarks">
+            <summary>
+               Clears all the marks on the board.
+             </summary>
+        </member>
+        <member name="M:Reversi.Model.Board.GetMoves(Reversi.Model.SquareStatus)">
+            <summary>
+               Gets the legal moves for a player.
+             </summary>
+             <param name="Player">The player that has to play.</param>
+             <returns>The moves.</returns>
+             <remarks>
+               If there is no move for the player, the result is an empty list.
+             </remarks>
+        </member>
+        <member name="M:Reversi.Model.Board.MarkMoves(Reversi.Model.SquareStatus)">
+            <summary>
+               Merks the legal moves for a player.
+             </summary>
+             <param name="Player">The player that has to play.</param>
+             <returns>The moves.</returns>
+             <remarks>
+               <para>
+                 This method removes the current marks and sets marks for the legal moves.
+               </para>
+               <para>
+                 If there is no move for the player, the result is an empty list.
+               </para>
+             </remarks>
+        </member>
+        <member name="M:Reversi.Model.Board.Play(Reversi.Model.SquareStatus,System.Int32,System.Int32)">
+            <summary>
+               Plays a disc to a position.
+             </summary>
+             <param name="Player">The player.</param>
+             <param name="Row">The row where the disc is played.</param>
+             <param name="Column">The column where the disc is played.</param>
+             <returns>The number of discs returned by the player. See the remarks</returns>
+             <exception cref="T:System.ArgumentException">
+               <paramref name="Player" /> is neither <see cref="F:Reversi.Model.SquareStatus.Dark">Dark</see>, nor
+               <see cref="F:Reversi.Model.SquareStatus.Light">Light</see>.<br />
+               -or-<br />
+               <paramref name="Row" /> is less than 1 or greater then <see cref="P:Reversi.Model.Board.NbRows" />.<br />
+               -or-<br />
+               <paramref name="Column" /> is less than 1 or greater then <see cref="P:Reversi.Model.Board.NbColumns" />.
+             </exception>
+             <exception cref="T:System.InvalidOperationException">
+               The specified position is not a valid move for <paramref name="Player" />.
+             </exception>
+        </member>
+        <member name="M:Reversi.Model.Board.Play(Reversi.Model.SquareStatus,System.Int32)">
+            <summary>
+               Plays a disc to a position.
+             </summary>
+             <param name="Player">The player.</param>
+             <param name="Position">The position where the disc is played.</param>
+             <returns>The number of discs returned by the player. See the remarks</returns>
+             <exception cref="T:System.ArgumentException">
+               <paramref name="Player" /> is neither <see cref="F:Reversi.Model.SquareStatus.Dark">Dark</see>, nor
+               <see cref="F:Reversi.Model.SquareStatus.Light">Light</see>.<br />
+               <paramref name="Position" /> is not a position on the board.
+             </exception>
+             <exception cref="T:System.InvalidOperationException">
+               The specified position is not a valid move for <paramref name="Player" />.
+             </exception>
+        </member>
+        <member name="T:Reversi.Model.SquareStatus">
+            <summary>
+               The status of a square on the board.
+             </summary>
+             <remarks>
+               <para>
+                 The <i>Empty</i>, <i>Dark</i> and <i>Light</i> values are used to save a board, so
+                 they have the smallest values. The <i>Outside</i> and <i>MoveableZone</i> values are
+                 only use during a game.
+               </para>
+               <para>
+                 This enum defines the <i>MoveableZone</i> that is a mark in addition to a normal
+                 status (here, the <i>Empty</i>.
+               </para>
+               <para>
+                 The <i>Outside</i> value is used to simplify the algorithm to calculate the moves:
+                 the algorithm can stop moving into a direction when one of these square is found.
+               </para>
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.SquareStatus.Empty">
+            <summary>
+               The square is empty.
+             </summary>
+             <remarks>
+               The value is <b>0</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.SquareStatus.Dark">
+            <summary>
+               The square contains a dark stone.
+             </summary>
+             <remarks>
+               The value is <b>1</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.SquareStatus.Light">
+            <summary>
+               The square contains a light stone.
+             </summary>
+             <remarks>
+               The value is <b>2</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.SquareStatus.Outside">
+            <summary>
+               The square is on the outside of the square.
+             </summary>
+             <remarks>
+               The value is <b>14</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.SquareStatus.MoveableZone">
+            <summary>
+               The square is a moveable zone for the current player.
+             </summary>
+             <remarks>
+               The value is <b>16</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.SquareStatus.ContentMask">
+            <summary>
+               The mask to have only the content of a square.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.SquareStatus.MarkMask">
+            <summary>
+               The mask to have only the marks of a square.
+             </summary>
+        </member>
+        <member name="T:Reversi.Model.StartPosition">
+            <summary>
+               The start position for a game.
+             </summary>
+             <remarks>
+               <para>
+                 The <see cref="P:OrdinaSoft.DiscreteValue`1.Null">Null</see> property is not defined in this class.
+               </para>
+               <para>
+                 For all starting positions, the 4 first discs are placed in the center of the board.
+               </para>
+               <h3>Text resources</h3>
+               <para>
+                 All the texts used by the class are taken from text resources files. The assembly
+                 defines the texts in English and in French. Other languages can be added with the
+                 <see cref="T:OrdinaSoft.TextResourcesDict">text resources dictionary</see>.
+               </para>
+               <para>
+                 The texts resources are in the <c>Reversi.StartPosition</c> group, with the name of
+                 the start position appended.
+               </para>
+               <h3>Values</h3>
+               <para>
+                 The values are defined in the <see cref="T:Reversi.Model.StartPosition.Values" /> nested class.
+               </para>
+             </remarks>
+             <seealso cref="T:Reversi.Model.StartPosition.Values" />
+        </member>
+        <member name="M:Reversi.Model.StartPosition.#cctor">
+            <summary>
+               Initializes the static data of the class.
+             </summary>
+        </member>
+        <member name="M:Reversi.Model.StartPosition.#ctor(System.String,System.Int32)">
+            <summary>
+               Initializes a start position value.
+             </summary>
+             <param name="Name">The name.</param>
+             <param name="Value">The value.</param>
+        </member>
+        <member name="M:Reversi.Model.StartPosition.#ctor">
+            <summary>
+               Initializes a start position without any value.
+             </summary>
+             <remarks>
+               This constructor is used internally only, but must be defined as public because of
+               generic constraints.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.ResNamePrefix">
+            <summary>
+               The prefix for the resource names.
+             </summary>
+             <remarks>
+               <para>
+                 The prefix is <b>Reversi.StartPosition.</b>.
+               </para>
+               <para>
+                 The resource name is constructed by appending the name of the start position to
+                 this prefix.
+               </para>
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Empty">
+            <summary>
+               The game starts with an empty board and the players play the four first discs in the
+               center, without the need to return the opponent discs.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.LightBottom">
+            <summary>
+               The position with two light discs at the bottom.
+             </summary>
+             <remarks>
+               The two dark discs are at the top.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.LightLeft">
+            <summary>
+               The position with two light discs at the left.
+             </summary>
+             <remarks>
+               The two dark discs are at the right.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.LightRight">
+            <summary>
+               The position with two light discs at the right.
+             </summary>
+             <remarks>
+               The two dark discs are at the left.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.LightTop">
+            <summary>
+               The position with two light discs at the top.
+             </summary>
+             <remarks>
+               The two dark discs are at the bottom.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Standard">
+            <summary>
+               The standard <i>Othello</i> start position.
+             </summary>
+             <remarks>
+               The discs are placed in a diagonal pattern, with a light disc at the top left.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.StandardInverted">
+            <summary>
+               The inverted standard <i>Othello</i> start position.
+             </summary>
+             <remarks>
+               The discs are placed in a diagonal pattern, with a dark disc at the top left.
+             </remarks>
+        </member>
+        <member name="T:Reversi.Model.StartPosition.Values">
+            <summary>
+               The values of the <see cref="T:Reversi.Model.StartPosition">start positions</see>.
+             </summary>
+             <seealso cref="T:Reversi.Model.StartPosition" />
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Values.Empty">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.StartPosition.Empty">Empty</see> start position.
+             </summary>
+             <remarks>
+               The value is <b>1</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Values.LightBottom">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.StartPosition.LightBottom">LightBottom</see> start
+               position.
+             </summary>
+             <remarks>
+               The value is <b>2</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Values.LightLeft">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.StartPosition.LightLeft">LightLeft</see> start position.
+             </summary>
+             <remarks>
+               The value is <b>3</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Values.LightRight">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.StartPosition.LightRight">LightRight</see> start
+               position.
+             </summary>
+             <remarks>
+               The value is <b>4</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Values.LightTop">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.StartPosition.LightTop">LightTop</see> start position.
+             </summary>
+             <remarks>
+               The value is <b>5</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Values.Standard">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.StartPosition.Standard">Standard</see> start position.
+             </summary>
+             <remarks>
+               The value is <b>6</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.StartPosition.Values.StandardInverted">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.StartPosition.StandardInverted">StandardInverted</see>
+               start position.
+             </summary>
+             <remarks>
+               The value is <b>7</b>.
+             </remarks>
+        </member>
+        <member name="T:Reversi.Model.BoardTransform">
+            <summary>
+               A board transformation.
+             </summary>
+             <remarks>
+               <para>
+                 As the Reversi board has no "preferential" direction (as in chess for example), the
+                 board can be rotated or have a line symmetry with the same position and the same best
+                 move. So a specific position has 8 different boards. This class defines the
+                 transforms that permits to get the original position from a transformed one.
+               </para>
+               <para>
+                 The <see cref="P:OrdinaSoft.DiscreteValue`1.Null">Null</see> property is not defined in this class.
+               </para>
+               <h3>Text resources</h3>
+               <para>
+                 All the texts used by the class are taken from text resources files. The assembly
+                 defines the texts in English and in French. Other languages can be added with the
+                 <see cref="T:OrdinaSoft.TextResourcesDict">text resources dictionary</see>.
+               </para>
+               <para>
+                 The texts resources are in the <c>Reversi.BoardTransform</c> group, with the name of
+                 the start position appended.
+               </para>
+               <h3>Values</h3>
+               <para>
+                 The values are defined in the <see cref="T:Reversi.Model.BoardTransform.Values" /> nested class.
+               </para>
+             </remarks>
+             <seealso cref="T:Reversi.Model.BoardTransform.Values" />
+        </member>
+        <member name="M:Reversi.Model.BoardTransform.#cctor">
+            <summary>
+               Initializes the static data of the class.
+             </summary>
+        </member>
+        <member name="M:Reversi.Model.BoardTransform.#ctor(System.String,System.Int32)">
+            <summary>
+               Initializes a board transformation value.
+             </summary>
+             <param name="Name">The name.</param>
+             <param name="Value">The value.</param>
+        </member>
+        <member name="M:Reversi.Model.BoardTransform.#ctor">
+            <summary>
+               Initializes a board transformation without any value.
+             </summary>
+             <remarks>
+               This constructor is used internally only, but must be defined as public because of
+               generic constraints.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.ResNamePrefix">
+            <summary>
+               The prefix for the resource names.
+             </summary>
+             <remarks>
+               <para>
+                 The prefix is <b>Reversi.BoardTransform.</b>.
+               </para>
+               <para>
+                 The resource name is constructed by appending the name of the start position to
+                 this prefix.
+               </para>
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.LeftBottomHorizontal">
+            <summary>
+               Starts at the left bottom corner, with horizontal row.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.LeftBottomVertical">
+            <summary>
+               Starts at the left bottom corner, with vertical row.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.LeftTopHorizontal">
+            <summary>
+               Starts at the left top corner, with horizontal row.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.LeftTopVertical">
+            <summary>
+               Starts at the left top corner, with vertical row.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.RightBottomHorizontal">
+            <summary>
+               Starts at the right bottom corner, with horizontal row.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.RightBottomVertical">
+            <summary>
+               Starts at the right bottom corner, with vertical row.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.RightTopHorizontal">
+            <summary>
+               Starts at the right top corner, with horizontal row.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.RightTopVertical">
+            <summary>
+               Starts at the right top corner, with vertical row.
+             </summary>
+        </member>
+        <member name="T:Reversi.Model.BoardTransform.Values">
+            <summary>
+               The values of the <see cref="T:Reversi.Model.BoardTransform">board transformations</see>.
+             </summary>
+             <seealso cref="T:Reversi.Model.BoardTransform" />
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Values.LeftBottomHorizontal">
+            <summary>
+               The value of the
+               <see cref="F:Reversi.Model.BoardTransform.LeftBottomHorizontal">LeftBottomHorizontal</see> board
+               transformation.
+             </summary>
+             <remarks>
+               The value is <b>1</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Values.LeftBottomVertical">
+            <summary>
+               The value of the
+               <see cref="F:Reversi.Model.BoardTransform.LeftBottomVertical">LeftBottomVertical</see> board
+               transformation.
+             </summary>
+             <remarks>
+               The value is <b>2</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Values.LeftTopHorizontal">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.BoardTransform.LeftTopHorizontal">LeftTopHorizontal</see>
+               board transformation.
+             </summary>
+             <remarks>
+               The value is <b>3</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Values.LeftTopVertical">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.BoardTransform.LeftTopVertical">LeftTopVertical</see>
+               board transformation.
+             </summary>
+             <remarks>
+               The value is <b>4</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Values.RightBottomHorizontal">
+            <summary>
+               The value of the
+               <see cref="F:Reversi.Model.BoardTransform.RightBottomHorizontal">RightBottomHorizontal</see> board
+               transformation.
+             </summary>
+             <remarks>
+               The value is <b>5</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Values.RightBottomVertical">
+            <summary>
+               The value of the
+               <see cref="F:Reversi.Model.BoardTransform.RightBottomVertical">RightBottomVertical</see> board
+               transformation.
+             </summary>
+             <remarks>
+               The value is <b>6</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Values.RightTopHorizontal">
+            <summary>
+               The value of the
+               <see cref="F:Reversi.Model.BoardTransform.RightTopHorizontal">RightTopHorizontal</see> board
+               transformation.
+             </summary>
+             <remarks>
+               The value is <b>7</b>.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Values.RightTopVertical">
+            <summary>
+               The value of the <see cref="F:Reversi.Model.BoardTransform.RightTopVertical">RightTopVertical</see>
+               board transformation.
+             </summary>
+             <remarks>
+               The value is <b>8</b>.
+             </remarks>
+        </member>
+        <member name="T:Reversi.Model.BoardTransform.Info">
+            <summary>
+               Information about a board transformation.
+             </summary>
+             <remarks>
+               Each information contains a start position and the number of squares to add for an
+               horizontal and a vertical move.
+             </remarks>
+        </member>
+        <member name="M:Reversi.Model.BoardTransform.Info.#ctor(Reversi.Model.Board,Reversi.Model.BoardTransform)">
+            <summary>
+               Initializes an instance of the class.
+             </summary>
+             <param name="Board">The board.</param>
+             <param name="Transform">The transform.</param>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Info.HorizontalMove">
+            <summary>
+               The horizontal move.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Info.StartPosition">
+            <summary>
+               The start position.
+             </summary>
+             <remarks>
+               This is the index of the first position.
+             </remarks>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Info.Transform">
+            <summary>
+               The transformation.
+             </summary>
+        </member>
+        <member name="F:Reversi.Model.BoardTransform.Info.VerticalMove">
+            <summary>
+               The vertical move.
+             </summary>
+        </member>
+    </members>
+</doc>

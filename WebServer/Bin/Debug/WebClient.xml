@@ -1,0 +1,59 @@
+﻿<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebClient</name>
+    </assembly>
+    <members>
+        <member name="T:WebClient.Program">
+            <summary>
+               The application.
+             </summary>
+        </member>
+        <member name="M:WebClient.Program.#ctor">
+            <summary>
+               Initializes an instance of the application.
+             </summary>
+        </member>
+        <member name="M:WebClient.Program.Main(System.String[])">
+            <summary>
+               Program entry point.
+             </summary>
+             <param name="Args">The command-line arguments.</param>
+        </member>
+        <member name="M:WebClient.Program.CreateHostBuilder(System.String[])">
+            <summary>
+               Creates the host builder.
+             </summary>
+             <param name="Args">The command-line arguments.</param>
+             <returns>The host builder.</returns>
+        </member>
+        <member name="T:WebClient.Startup">
+            <summary>
+               Startup and server configuration.
+             </summary>
+        </member>
+        <member name="M:WebClient.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+               Initializes an instance of the class.
+             </summary>
+             <param name="Environment">The environment.</param>
+        </member>
+        <member name="F:WebClient.Startup.Environment">
+            <summary>
+               The environment.
+             </summary>
+        </member>
+        <member name="M:WebClient.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+               Called by the runtime to configure the services.
+             </summary>
+             <param name="Services">The current services.</param>
+        </member>
+        <member name="M:WebClient.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+               Called by the runtime to configure the HTTP request pipeline.
+             </summary>
+             <param name="Application">The application builder.</param>
+        </member>
+    </members>
+</doc>

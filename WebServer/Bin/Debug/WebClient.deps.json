@@ -1,0 +1,55 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {
+    "defines": [
+      "DEBUG",
+      "TRACE"
+    ]
+  },
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "WebClient/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.WebAssembly.Server": "5.0.2"
+        },
+        "runtime": {
+          "WebClient.dll": {
+          },
+          "OrdinaSoft.Base.dll": {
+          },
+          "Reversi.Model.dll": {
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Components.WebAssembly.Server/5.0.2": {
+      }
+    }
+  },
+  "libraries": {
+    "WebClient/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "OrdinaSoft.Base": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Reversi.Model": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.AspNetCore.Components.WebAssembly.Server/5.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YJ/+q/+hCAe0ToIwJMiTE8/ZDfvSkojLAitnn6mkN5RkdxoNWcZRj3yFKeM5h9mtatu617JAjAheSxNS1MNmFw==",
+      "path": "microsoft.aspnetcore.components.webassembly.server/5.0.2",
+      "hashPath": "microsoft.aspnetcore.components.webassembly.server.5.0.2.nupkg.sha512"
+    }
+  }
+}
